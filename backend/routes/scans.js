@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Scan = require('../models/Scan');
+const { generateScanReport } = require('../utils/reportGenerator');
 const { exec } = require('child_process');
 const path = require('path');
 
@@ -176,6 +177,8 @@ async function executeNmapScan(scan) {
         if (error && !stdout) {
           updatedScan.status = 'failed';
           updatedScan.results = { error: error.message };
+          await updatedScan.save();
+          console.log(`❌ Scan failed: ${scan._id}`);
         } else {
           updatedScan.status = 'completed';
           updatedScan.results = { output: stdout };
@@ -187,10 +190,20 @@ async function executeNmapScan(scan) {
           if (portMatches) {
             updatedScan.ports.open = portMatches.map((p) => parseInt(p));
           }
-        }
 
-        await updatedScan.save();
-        console.log(`✅ Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
+          // Generate HTML report
+          try {
+            const reportPath = await generateScanReport(updatedScan);
+            updatedScan.reportPath = reportPath;
+            console.log(`📄 Report generated and stored: ${reportPath}`);
+          } catch (reportError) {
+            console.error('⚠️ Warning: Could not generate report:', reportError.message);
+            // Continue even if report generation fails
+          }
+
+          await updatedScan.save();
+          console.log(`✅ Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
+        }
       } catch (saveError) {
         console.error('Error saving scan results:', saveError);
       }

@@ -272,6 +272,15 @@ function Scans() {
                   >
                     👁️ View
                   </button>
+                  {scan.reportPath && (
+                    <button 
+                      className="action-btn report"
+                      onClick={() => window.open(scan.reportPath, '_blank')}
+                      title="Open generated report"
+                    >
+                      📄 Report
+                    </button>
+                  )}
                   <button 
                     className="action-btn delete"
                     onClick={() => handleDeleteScan(scan._id)}
@@ -329,6 +338,19 @@ function Scans() {
                 <label>Duration:</label>
                 <p>{selectedScan.duration ? `${selectedScan.duration}s` : 'N/A'}</p>
               </div>
+              
+              {selectedScan.reportPath && (
+                <div className="detail-group">
+                  <label>Generated Report:</label>
+                  <button 
+                    className="report-link-btn"
+                    onClick={() => window.open(selectedScan.reportPath, '_blank')}
+                  >
+                    📄 Open Report ↗️
+                  </button>
+                </div>
+              )}
+
               <div className="detail-group">
                 <label>Open Ports:</label>
                 <p>{selectedScan.ports.open.join(', ') || 'None'}</p>

@@ -187,6 +187,11 @@
   color: #ff6b6b;
 }
 
+.action-btn.report {
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+}
+
 .action-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -343,6 +348,23 @@
 .edit-textarea {
   resize: vertical;
   max-height: 150px;
+}
+
+.report-link-btn {
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  font-size: 0.95em;
+}
+
+.report-link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
 }
 
 .modal-actions {
