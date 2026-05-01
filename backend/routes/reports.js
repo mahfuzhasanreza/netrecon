@@ -52,23 +52,46 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
-// Get report content
-router.get('/:id', authenticate, async (req, res) => {
-  try {
-    const reportPath = path.join(process.cwd(), 'reports', req.params.id);
-    const content = await fs.readFile(reportPath, 'utf8');
-    res.type('text/html').send(content);
-  } catch (error) {
-    res.status(404).json({ error: 'Report not found' });
-  }
-});
-
-// Download report
+// Download report (must be before GET /:id to avoid route conflict)
 router.get('/download/:id', authenticate, async (req, res) => {
   try {
     const reportPath = path.join(process.cwd(), 'reports', req.params.id);
-    res.download(reportPath);
+    
+    // Security: prevent directory traversal
+    if (!reportPath.startsWith(path.join(process.cwd(), 'reports'))) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    res.download(reportPath, req.params.id, (err) => {
+      if (err) {
+        console.error('Download error:', err);
+        if (!res.headersSent) {
+          res.status(404).json({ error: 'Report not found' });
+        }
+      }
+    });
   } catch (error) {
+    console.error('Error downloading report:', error);
+    if (!res.headersSent) {
+      res.status(404).json({ error: 'Report not found' });
+    }
+  }
+});
+
+// Get report content (view in browser)
+router.get('/:id', authenticate, async (req, res) => {
+  try {
+    const reportPath = path.join(process.cwd(), 'reports', req.params.id);
+    
+    // Security: prevent directory traversal
+    if (!reportPath.startsWith(path.join(process.cwd(), 'reports'))) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    const content = await fs.readFile(reportPath, 'utf8');
+    res.type('text/html').send(content);
+  } catch (error) {
+    console.error('Error reading report:', error);
     res.status(404).json({ error: 'Report not found' });
   }
 });
@@ -192,13 +215,16 @@ Nmap done at ${new Date().toLocaleString()} -- 1 IP address (1 host up) scanned 
 </html>`;
 
     await fs.writeFile(reportPath, testHtmlContent);
+    
+    console.log(`✅ Test report generated: ${reportFile}`);
 
-    res.json({
+    res.status(201).json({
       message: 'Test report generated successfully',
       reportName: reportFile,
       path: `/reports/${reportFile}`,
     });
   } catch (error) {
+    console.error('❌ Error generating test report:', error);
     res.status(500).json({ error: error.message });
   }
 });
