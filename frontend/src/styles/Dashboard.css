@@ -1,0 +1,129 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  bordered: 1px solid #667eea;
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.stat-card h3 {
+  color: #b0b8d4;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #667eea;
+  margin: 0;
+}
+
+.stat-card.success .stat-value {
+  color: #51cf66;
+}
+
+.stat-card.danger .stat-value {
+  color: #ff6b6b;
+}
+
+.stat-card.info .stat-value {
+  color: #4dabf7;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.chart-container {
+  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  border: 1px solid #667eea;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.chart-container h3 {
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.recent-scans {
+  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  border: 1px solid #667eea;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.recent-scans h3 {
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.recent-scans table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-scans th {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #667eea;
+}
+
+.recent-scans td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  color: #b0b8d4;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.completed {
+  background: rgba(81, 207, 102, 0.2);
+  color: #51cf66;
+}
+
+.status-badge.failed {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
+
+.status-badge.running {
+  background: rgba(77, 171, 247, 0.2);
+  color: #4dabf7;
+}
+
+.status-badge.pending {
+  background: rgba(176, 184, 212, 0.2);
+  color: #b0b8d4;
+}
