@@ -135,85 +135,162 @@ router.post('/test-scan', authenticate, async (req, res) => {
   }
 });
 
-// Execute nmap scan
+// Helper function to execute command with promise
+function executeCommand(command) {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error && !stdout) {
+        reject(error);
+      } else {
+        resolve(stdout);
+      }
+    });
+  });
+}
+
+// Execute nmap scan based on type
 async function executeNmapScan(scan) {
   try {
     scan.status = 'running';
     await scan.save();
 
-    let nmapCommand = '';
+    let allResults = {
+      hostDiscovery: '',
+      portScan: '',
+      serviceDetection: '',
+      osDetection: '',
+    };
 
-    switch (scan.scanType) {
-      case 'quick':
-        nmapCommand = `nmap -F ${scan.target}`;
-        break;
-      case 'full':
-        nmapCommand = `nmap -p- ${scan.target}`;
-        break;
-      case 'stealth':
-        nmapCommand = `nmap -sS -T1 --scan-delay 1s ${scan.target}`;
-        break;
-      case 'udp':
-        nmapCommand = `sudo nmap -sU -p- ${scan.target}`;
-        break;
-      case 'vulnerability':
-        nmapCommand = `nmap -sV -sC ${scan.target}`;
-        break;
-      case 'web':
-        nmapCommand = `nmap -p 80,443,8080,8443,3000 -sV -sC ${scan.target}`;
-        break;
-      case 'lan-discovery':
-        nmapCommand = `nmap -sn ${scan.target}`;
-        break;
-      default:
-        nmapCommand = `nmap -F ${scan.target}`;
-    }
+    try {
+      // Run different nmap commands based on scan type
+      switch (scan.scanType) {
+        case 'quick':
+          // Quick: Host Discovery + Fast Port Scan
+          console.log(`🔍 [Quick Scan] Running host discovery...`);
+          allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
+          console.log(`📡 [Quick Scan] Running fast port scan...`);
+          allResults.portScan = await executeCommand(`nmap -F ${scan.target}`);
+          break;
 
-    exec(nmapCommand, async (error, stdout, stderr) => {
-      try {
-        // Fetch fresh scan from DB
-        const updatedScan = await Scan.findById(scan._id);
-        
-        if (error && !stdout) {
-          updatedScan.status = 'failed';
-          updatedScan.results = { error: error.message };
-          await updatedScan.save();
-          console.log(`❌ Scan failed: ${scan._id}`);
-        } else {
-          updatedScan.status = 'completed';
-          updatedScan.results = { output: stdout };
-          updatedScan.endTime = new Date();
-          updatedScan.duration = Math.round((updatedScan.endTime - updatedScan.startTime) / 1000);
+        case 'full':
+          // Full: Host Discovery + Full Port Scan + Service Detection + OS Detection
+          console.log(`🔍 [Full Scan] Running host discovery...`);
+          allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
+          console.log(`📡 [Full Scan] Running full port scan...`);
+          allResults.portScan = await executeCommand(`nmap -p- ${scan.target}`);
+          console.log(`🔧 [Full Scan] Running service detection...`);
+          allResults.serviceDetection = await executeCommand(`nmap -sV -T4 ${scan.target}`);
+          console.log(`🖥️ [Full Scan] Running OS detection...`);
+          allResults.osDetection = await executeCommand(`sudo nmap -O -T4 ${scan.target}`);
+          break;
 
-          // Parse results for open ports
-          const portMatches = stdout.match(/(\d+)\/tcp.*open/g);
-          if (portMatches) {
-            updatedScan.ports.open = portMatches.map((p) => parseInt(p));
-          }
+        case 'stealth':
+          // Stealth: Stealth port scan
+          console.log(`🕵️ [Stealth Scan] Running stealth scan...`);
+          allResults.portScan = await executeCommand(`nmap -sS -T1 --scan-delay 1s ${scan.target}`);
+          break;
 
-          // Generate HTML report
-          try {
-            const reportPath = await generateScanReport(updatedScan);
-            updatedScan.reportPath = reportPath;
-            console.log(`📄 Report generated and stored: ${reportPath}`);
-          } catch (reportError) {
-            console.error('⚠️ Warning: Could not generate report:', reportError.message);
-            // Continue even if report generation fails
-          }
+        case 'udp':
+          // UDP: UDP port scan
+          console.log(`📡 [UDP Scan] Running UDP port scan...`);
+          allResults.portScan = await executeCommand(`sudo nmap -sU -p- ${scan.target}`);
+          break;
 
-          await updatedScan.save();
-          console.log(`✅ Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
-        }
-      } catch (saveError) {
-        console.error('Error saving scan results:', saveError);
+        case 'vulnerability':
+          // Vulnerability: Service detection with NSE scripts
+          console.log(`⚠️ [Vulnerability Scan] Running vulnerability assessment...`);
+          allResults.serviceDetection = await executeCommand(`nmap -sV -sC ${scan.target}`);
+          break;
+
+        case 'web':
+          // Web: Specific web ports with service detection
+          console.log(`🌐 [Web Scan] Running web service scan...`);
+          allResults.portScan = await executeCommand(
+            `nmap -p 80,443,8080,8443,3000 -sV -sC ${scan.target}`
+          );
+          break;
+
+        case 'lan-discovery':
+          // LAN Discovery: Host discovery only
+          console.log(`🏠 [LAN Discovery] Discovering local network...`);
+          allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
+          break;
+
+        default:
+          console.log(`⚠️ [Default] Running quick scan...`);
+          allResults.portScan = await executeCommand(`nmap -F ${scan.target}`);
       }
-    });
+
+      // Fetch fresh scan from DB
+      const updatedScan = await Scan.findById(scan._id);
+      updatedScan.status = 'completed';
+      updatedScan.results = allResults;
+      updatedScan.endTime = new Date();
+      updatedScan.duration = Math.round(
+        (updatedScan.endTime - updatedScan.startTime) / 1000
+      );
+
+      // Parse all outputs to extract port information
+      const allOutput = Object.values(allResults).join('\n');
+      
+      // Extract TCP open ports
+      const tcpOpenMatches = allOutput.match(/(\d+)\/tcp\s+open/g);
+      if (tcpOpenMatches) {
+        updatedScan.ports.open = [
+          ...new Set(tcpOpenMatches.map((p) => parseInt(p))),
+        ];
+      }
+
+      // Extract TCP closed ports
+      const tcpClosedMatches = allOutput.match(/(\d+)\/tcp\s+closed/g);
+      if (tcpClosedMatches) {
+        updatedScan.ports.closed = [
+          ...new Set(tcpClosedMatches.map((p) => parseInt(p))),
+        ];
+      }
+
+      // Extract TCP filtered ports
+      const tcpFilteredMatches = allOutput.match(/(\d+)\/tcp\s+filtered/g);
+      if (tcpFilteredMatches) {
+        updatedScan.ports.filtered = [
+          ...new Set(tcpFilteredMatches.map((p) => parseInt(p))),
+        ];
+      }
+
+      // Generate HTML report
+      try {
+        const reportPath = await generateScanReport(updatedScan);
+        updatedScan.reportPath = reportPath;
+        console.log(`📄 Report generated and stored: ${reportPath}`);
+      } catch (reportError) {
+        console.error('⚠️ Warning: Could not generate report:', reportError.message);
+        // Continue even if report generation fails
+      }
+
+      await updatedScan.save();
+      console.log(`✅ Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
+    } catch (execError) {
+      // Fetch fresh scan from DB
+      const updatedScan = await Scan.findById(scan._id);
+      updatedScan.status = 'failed';
+      updatedScan.results = {
+        error: execError.message,
+      };
+      updatedScan.endTime = new Date();
+      updatedScan.duration = Math.round(
+        (updatedScan.endTime - updatedScan.startTime) / 1000
+      );
+      await updatedScan.save();
+      console.error(`❌ Scan failed: ${scan._id} - Error: ${execError.message}`);
+    }
   } catch (error) {
     console.error('Error executing nmap:', error);
     try {
-      await Scan.findByIdAndUpdate(scan._id, { 
-        status: 'failed', 
-        results: { error: error.message } 
+      await Scan.findByIdAndUpdate(scan._id, {
+        status: 'failed',
+        results: {
+          error: error.message,
+        },
       });
     } catch (updateError) {
       console.error('Error updating failed scan:', updateError);

@@ -226,10 +226,38 @@ async function generateScanReport(scan) {
                 </div>
             </div>
 
-            ${scan.results && scan.results.output ? `
+            ${scan.results && scan.results.hostDiscovery ? `
             <div class="nmap-output">
-                <div class="nmap-title">📋 Raw Nmap Output</div>
-                ${escapeHtml(scan.results.output)}
+                <div class="nmap-title">🔍 Host Discovery Results</div>
+                ${escapeHtml(scan.results.hostDiscovery)}
+            </div>
+            ` : ''}
+
+            ${scan.results && scan.results.portScan ? `
+            <div class="nmap-output">
+                <div class="nmap-title">📡 Port Scan Results</div>
+                ${escapeHtml(scan.results.portScan)}
+            </div>
+            ` : ''}
+
+            ${scan.results && scan.results.serviceDetection ? `
+            <div class="nmap-output">
+                <div class="nmap-title">🔧 Service Detection Results</div>
+                ${escapeHtml(scan.results.serviceDetection)}
+            </div>
+            ` : ''}
+
+            ${scan.results && scan.results.osDetection ? `
+            <div class="nmap-output">
+                <div class="nmap-title">🖥️ OS Detection Results</div>
+                ${escapeHtml(scan.results.osDetection)}
+            </div>
+            ` : ''}
+
+            ${scan.results && scan.results.error ? `
+            <div class="nmap-output" style="border-left: 4px solid #ff6b6b;">
+                <div class="nmap-title" style="color: #ff6b6b;">⚠️ Error Details</div>
+                ${escapeHtml(scan.results.error)}
             </div>
             ` : ''}
         </div>

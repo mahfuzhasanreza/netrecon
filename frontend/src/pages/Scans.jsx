@@ -20,6 +20,7 @@ function Scans() {
   const [scanNotes, setScanNotes] = useState('');
   const [scanTags, setScanTags] = useState('');
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [activeResultTab, setActiveResultTab] = useState('portScan');
 
   useEffect(() => {
     // Initialize socket connection with error handling
@@ -383,10 +384,78 @@ function Scans() {
                 />
               </div>
 
-              {selectedScan.results && selectedScan.results.output && (
+              <div className="detail-group">
+                <label>Port Information:</label>
+                <div className="ports-info">
+                  {selectedScan.ports.open.length > 0 && (
+                    <p className="port-status open">🟢 Open: {selectedScan.ports.open.join(', ')}</p>
+                  )}
+                  {selectedScan.ports.closed.length > 0 && (
+                    <p className="port-status closed">🔴 Closed: {selectedScan.ports.closed.join(', ')}</p>
+                  )}
+                  {selectedScan.ports.filtered.length > 0 && (
+                    <p className="port-status filtered">🟡 Filtered: {selectedScan.ports.filtered.join(', ')}</p>
+                  )}
+                  {selectedScan.ports.open.length === 0 && 
+                   selectedScan.ports.closed.length === 0 && 
+                   selectedScan.ports.filtered.length === 0 && (
+                    <p>No ports found</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Scan Results Tabs */}
+              {selectedScan.results && Object.keys(selectedScan.results).length > 0 && (
                 <div className="detail-group">
-                  <label>Nmap Output:</label>
-                  <pre className="output-box">{selectedScan.results.output}</pre>
+                  <label>Scan Results:</label>
+                  <div className="result-tabs">
+                    {selectedScan.results.hostDiscovery && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'hostDiscovery' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('hostDiscovery')}
+                      >
+                        🔍 Host Discovery
+                      </button>
+                    )}
+                    {selectedScan.results.portScan && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'portScan' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('portScan')}
+                      >
+                        📡 Port Scan
+                      </button>
+                    )}
+                    {selectedScan.results.serviceDetection && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'serviceDetection' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('serviceDetection')}
+                      >
+                        🔧 Service Detection
+                      </button>
+                    )}
+                    {selectedScan.results.osDetection && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'osDetection' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('osDetection')}
+                      >
+                        🖥️ OS Detection
+                      </button>
+                    )}
+                    {selectedScan.results.error && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'error' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('error')}
+                      >
+                        ⚠️ Error
+                      </button>
+                    )}
+                  </div>
+                  <pre className="output-box">
+                    {selectedScan.results[activeResultTab] || 
+                     (selectedScan.results.error && activeResultTab === 'error' 
+                       ? selectedScan.results.error 
+                       : 'No data available')}
+                  </pre>
                 </div>
               )}
 
