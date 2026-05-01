@@ -16,6 +16,10 @@ function Scans() {
   const [selectedScan, setSelectedScan] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [scanNotes, setScanNotes] = useState('');
+  const [scanTags, setScanTags] = useState('');
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     // Initialize socket connection with error handling
@@ -116,6 +120,9 @@ function Scans() {
       const response = await axios.get(`/api/scans/${scanId}`);
       console.log('✅ Scan details received:', response.data);
       setSelectedScan(response.data);
+      setScanNotes(response.data.notes || '');
+      setScanTags(response.data.tags ? response.data.tags.join(', ') : '');
+      setIsBookmarked(response.data.isBookmarked || false);
       setShowDetails(true);
     } catch (error) {
       console.error('❌ Error fetching scan details:', error.response?.data || error.message);
@@ -139,6 +146,39 @@ function Scans() {
     } finally {
       setDeleting(false);
     }
+  };
+
+  const handleUpdateScan = async () => {
+    if (!selectedScan) return;
+    
+    console.log('✏️ Updating scan:', selectedScan._id);
+    setUpdating(true);
+    try {
+      const updateData = {
+        notes: scanNotes,
+        tags: scanTags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        isBookmarked: isBookmarked,
+      };
+      
+      const response = await axios.put(`/api/scans/${selectedScan._id}`, updateData);
+      console.log('✅ Update response:', response.data);
+      
+      // Update local state
+      setScans((prev) =>
+        prev.map((s) => (s._id === selectedScan._id ? response.data : s))
+      );
+      setSelectedScan(response.data);
+      alert('Scan updated successfully');
+    } catch (error) {
+      console.error('❌ Error updating scan:', error.response?.data || error.message);
+      alert('Error updating scan: ' + (error.response?.data?.error || error.message));
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleToggleBookmark = async () => {
+    setIsBookmarked(!isBookmarked);
   };
 
   return (
@@ -252,12 +292,21 @@ function Scans() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>📊 Scan Details</h2>
-              <button 
-                className="modal-close"
-                onClick={() => setShowDetails(false)}
-              >
-                ✕
-              </button>
+              <div className="modal-actions-top">
+                <button 
+                  className={`bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`}
+                  onClick={handleToggleBookmark}
+                  title={isBookmarked ? 'Remove bookmark' : 'Bookmark this scan'}
+                >
+                  {isBookmarked ? '⭐' : '☆'}
+                </button>
+                <button 
+                  className="modal-close"
+                  onClick={() => setShowDetails(false)}
+                >
+                  ✕
+                </button>
+              </div>
             </div>
             <div className="modal-body">
               <div className="detail-group">
@@ -288,12 +337,54 @@ function Scans() {
                 <label>Created:</label>
                 <p>{new Date(selectedScan.createdAt).toLocaleString()}</p>
               </div>
+
+              {/* Editable Fields */}
+              <div className="detail-group">
+                <label>Tags:</label>
+                <input
+                  type="text"
+                  value={scanTags}
+                  onChange={(e) => setScanTags(e.target.value)}
+                  placeholder="Enter tags separated by commas (e.g., important, follow-up)"
+                  className="edit-input"
+                />
+              </div>
+
+              <div className="detail-group">
+                <label>Notes:</label>
+                <textarea
+                  value={scanNotes}
+                  onChange={(e) => setScanNotes(e.target.value)}
+                  placeholder="Add notes about this scan..."
+                  className="edit-textarea"
+                  rows="4"
+                />
+              </div>
+
               {selectedScan.results && selectedScan.results.output && (
                 <div className="detail-group">
                   <label>Nmap Output:</label>
                   <pre className="output-box">{selectedScan.results.output}</pre>
                 </div>
               )}
+
+              {/* Action Buttons */}
+              <div className="modal-actions">
+                <button 
+                  className="btn-save"
+                  onClick={handleUpdateScan}
+                  disabled={updating}
+                >
+                  {updating ? '⏳ Saving...' : '💾 Save Changes'}
+                </button>
+                <button 
+                  className="btn-cancel"
+                  onClick={() => setShowDetails(false)}
+                  disabled={updating}
+                >
+                  ✕ Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

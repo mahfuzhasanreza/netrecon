@@ -259,6 +259,29 @@
   margin: 0;
 }
 
+.modal-actions-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bookmark-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 5px 10px;
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.2);
+}
+
+.bookmark-btn.bookmarked {
+  color: #ffd700;
+}
+
 .modal-close {
   background: none;
   border: none;
@@ -294,6 +317,81 @@
   padding: 10px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #667eea;
+  color: #b0b8d4;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95em;
+  margin-top: 5px;
+}
+
+.edit-input:focus,
+.edit-textarea:focus {
+  outline: none;
+  background: rgba(102, 126, 234, 0.1);
+  border-color: #764ba2;
+  color: #fff;
+}
+
+.edit-textarea {
+  resize: vertical;
+  max-height: 150px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #667eea;
+}
+
+.btn-save,
+.btn-cancel {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  color: white;
+}
+
+.btn-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(81, 207, 102, 0.3);
+}
+
+.btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+  color: white;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+}
+
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .output-box {
