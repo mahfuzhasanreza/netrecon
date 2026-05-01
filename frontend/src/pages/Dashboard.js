@@ -94,7 +94,7 @@ function Dashboard() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="scans" stroke="#667eea" />
+              <Line type="monotone" dataKey="scans" stroke="#FF4D00" />
             </LineChart>
           </ResponsiveContainer>
         </div>

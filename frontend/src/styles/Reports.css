@@ -12,12 +12,12 @@
 }
 
 .reports h2 {
-  color: #667eea;
+  color: #FF4D00;
   margin: 0;
 }
 
 .generate-test-btn {
-  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  background: #4caf50;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -29,8 +29,8 @@
 }
 
 .generate-test-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(81, 207, 102, 0.3);
+  background: #45a049;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
 .generate-test-btn:disabled {
@@ -46,27 +46,27 @@
 
 .no-reports {
   grid-column: 1 / -1;
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  border: 2px dashed #667eea;
+  background: #f5f5f5;
+  border: 2px dashed #FF4D00;
   border-radius: 12px;
   padding: 60px 20px;
   text-align: center;
 }
 
 .no-reports p {
-  color: #b0b8d4;
+  color: #666;
   font-size: 1.1em;
   margin: 10px 0;
 }
 
 .no-reports .hint {
-  color: #667eea;
+  color: #FF4D00;
   font-size: 0.9em;
 }
 
 .report-card {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  border: 1px solid #667eea;
+  background: #ffffff;
+  border: 2px solid #FF4D00;
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s;
@@ -74,18 +74,18 @@
 
 .report-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 16px rgba(149, 117, 205, 0.2);
 }
 
 .report-header {
-  background: rgba(102, 126, 234, 0.1);
+  background: #f0e6ff;
   padding: 15px;
-  border-bottom: 1px solid #667eea;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .report-header h3 {
   margin: 0;
-  color: #667eea;
+  color: #FF4D00;
   word-break: break-word;
 }
 
@@ -94,13 +94,13 @@
 }
 
 .report-date {
-  color: #b0b8d4;
+  color: #999;
   font-size: 0.9em;
   margin: 0 0 8px 0;
 }
 
 .report-size {
-  color: #51cf66;
+  color: #4caf50;
   font-size: 0.85em;
   margin: 0;
 }
@@ -109,7 +109,7 @@
   display: flex;
   gap: 10px;
   padding: 15px;
-  border-top: 1px solid rgba(102, 126, 234, 0.1);
+  border-top: 1px solid #e0e0e0;
 }
 
 .action-btn {
@@ -125,18 +125,18 @@
 }
 
 .action-btn.view {
-  background: rgba(77, 171, 247, 0.2);
-  color: #4dabf7;
+  background: #e3f2fd;
+  color: #FF4D00;
 }
 
 .action-btn.download {
-  background: rgba(81, 207, 102, 0.2);
-  color: #51cf66;
+  background: #e8f5e9;
+  color: #2e7d32;
 }
 
 .action-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -165,7 +165,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,8 +173,8 @@
 }
 
 .preview-modal {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  border: 1px solid #667eea;
+  background: #ffffff;
+  border: 2px solid #FF4D00;
   border-radius: 12px;
   width: 90%;
   max-width: 1000px;
@@ -189,12 +189,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  border-bottom: 2px solid #FF4D00;
+  background: #f0e6ff;
 }
 
 .preview-header h2 {
-  color: #667eea;
+  color: #FF4D00;
   margin: 0;
   word-break: break-word;
   flex: 1;
@@ -203,7 +203,7 @@
 .preview-close {
   background: none;
   border: none;
-  color: #b0b8d4;
+  color: #999;
   font-size: 1.5em;
   cursor: pointer;
   transition: all 0.3s;
@@ -212,14 +212,14 @@
 }
 
 .preview-close:hover {
-  color: #667eea;
+  color: #FF4D00;
   transform: scale(1.2);
 }
 
 .preview-content {
   flex: 1;
   overflow: auto;
-  background: white;
+  background: #ffffff;
 }
 
 .preview-frame {

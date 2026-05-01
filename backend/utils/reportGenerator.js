@@ -31,7 +31,7 @@ async function generateScanReport(scan) {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF4D00 0%, #FF4D00 100%);
             color: #333;
             padding: 20px;
             min-height: 100vh;
@@ -45,7 +45,7 @@ async function generateScanReport(scan) {
             overflow: hidden;
         }
         header { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF4D00 0%, #FF4D00 100%);
             color: white; 
             padding: 40px; 
             text-align: center;
@@ -64,12 +64,12 @@ async function generateScanReport(scan) {
         }
         .info-box { 
             background: #f5f7fa; 
-            border-left: 4px solid #667eea; 
+            border-left: 4px solid #FF4D00; 
             padding: 20px; 
             border-radius: 8px;
         }
         .info-box label { 
-            color: #667eea; 
+            color: #FF4D00; 
             font-weight: bold; 
             display: block; 
             margin-bottom: 8px;
@@ -102,7 +102,7 @@ async function generateScanReport(scan) {
             margin: 30px 0;
         }
         .ports-section h3 {
-            color: #667eea;
+            color: #FF4D00;
             margin-bottom: 15px;
         }
         .port-list {
@@ -114,10 +114,10 @@ async function generateScanReport(scan) {
             background: white;
             padding: 15px;
             border-radius: 6px;
-            border-left: 3px solid #667eea;
+            border-left: 3px solid #FF4D00;
         }
         .port-group-title {
-            color: #667eea;
+            color: #FF4D00;
             font-weight: bold;
             margin-bottom: 8px;
             font-size: 0.9em;
@@ -141,7 +141,7 @@ async function generateScanReport(scan) {
             border: 1px solid #ddd;
         }
         .nmap-title {
-            color: #667eea;
+            color: #FF4D00;
             font-weight: bold;
             margin-bottom: 15px;
         }

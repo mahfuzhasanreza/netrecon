@@ -1,16 +1,16 @@
 .app {
   display: flex;
   height: 100vh;
-  background: #0f0f1e;
-  color: #fff;
+  background: #ffffff;
+  color: #333;
 }
 
 .sidebar {
   width: 280px;
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #667eea;
+  border-right: 2px solid #FF4D00;
   transition: width 0.3s ease;
   overflow-y: auto;
 }
@@ -21,7 +21,7 @@
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #667eea;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,13 +30,13 @@
 .sidebar-header h1 {
   font-size: 1.5em;
   margin: 0;
-  color: #667eea;
+  color: #FF4D00;
 }
 
 .toggle-btn {
   background: none;
   border: none;
-  color: #667eea;
+  color: #FF4D00;
   cursor: pointer;
   font-size: 1.2em;
 }
@@ -51,7 +51,7 @@
 .nav-item {
   background: none;
   border: none;
-  color: #b0b8d4;
+  color: #666;
   padding: 15px 20px;
   text-align: left;
   cursor: pointer;
@@ -61,20 +61,20 @@
 }
 
 .nav-item:hover {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
-  border-left-color: #667eea;
+  background: #f5f5f5;
+  color: #FF4D00;
+  border-left-color: #FF4D00;
 }
 
 .nav-item.active {
-  background: rgba(102, 126, 234, 0.2);
-  color: #667eea;
-  border-left-color: #667eea;
+  background: #f0e6ff;
+  color: #FF4D00;
+  border-left-color: #FF4D00;
 }
 
 .sidebar-footer {
   padding: 20px;
-  border-top: 1px solid #667eea;
+  border-top: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -85,13 +85,14 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  background: rgba(102, 126, 234, 0.1);
+  background: #f0e6ff;
   border-radius: 8px;
   font-size: 0.9em;
+  color: #333;
 }
 
 .logout-btn {
-  background: #ff6b6b;
+  background: #ef5350;
   border: none;
   color: white;
   padding: 10px 15px;
@@ -104,7 +105,7 @@
 }
 
 .logout-btn:hover {
-  background: #ff5252;
+  background: #e53935;
 }
 
 .main-content {
@@ -112,12 +113,13 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: #ffffff;
 }
 
 .app-header {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  background: #ffffff;
   padding: 20px;
-  border-bottom: 1px solid #667eea;
+  border-bottom: 2px solid #FF4D00;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -125,7 +127,7 @@
 
 .app-header h2 {
   margin: 0;
-  color: #667eea;
+  color: #FF4D00;
 }
 
 .header-right {
@@ -141,7 +143,7 @@
 .menu-toggle {
   background: none;
   border: none;
-  color: #667eea;
+  color: #FF4D00;
   cursor: pointer;
   font-size: 1.3em;
   display: none;

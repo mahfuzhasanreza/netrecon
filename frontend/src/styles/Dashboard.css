@@ -11,8 +11,8 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  bordered: 1px solid #667eea;
+  background: #ffffff;
+  border: 2px solid #FF4D00;
   border-radius: 12px;
   padding: 25px;
   transition: all 0.3s ease;
@@ -20,11 +20,11 @@
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 16px rgba(149, 117, 205, 0.2);
 }
 
 .stat-card h3 {
-  color: #b0b8d4;
+  color: #999;
   font-size: 0.9em;
   margin-bottom: 10px;
   text-transform: uppercase;
@@ -33,20 +33,20 @@
 .stat-value {
   font-size: 2.5em;
   font-weight: bold;
-  color: #667eea;
+  color: #FF4D00;
   margin: 0;
 }
 
 .stat-card.success .stat-value {
-  color: #51cf66;
+  color: #4caf50;
 }
 
 .stat-card.danger .stat-value {
-  color: #ff6b6b;
+  color: #ef5350;
 }
 
 .stat-card.info .stat-value {
-  color: #4dabf7;
+  color: #FF4D00;
 }
 
 .charts-section {
@@ -56,27 +56,27 @@
 }
 
 .chart-container {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  border: 1px solid #667eea;
+  background: #ffffff;
+  border: 2px solid #FF4D00;
   border-radius: 12px;
   padding: 20px;
 }
 
 .chart-container h3 {
-  color: #667eea;
+  color: #FF4D00;
   margin-bottom: 20px;
 }
 
 .recent-scans {
-  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-  border: 1px solid #667eea;
+  background: #ffffff;
+  border: 2px solid #FF4D00;
   border-radius: 12px;
   padding: 20px;
   overflow-x: auto;
 }
 
 .recent-scans h3 {
-  color: #667eea;
+  color: #FF4D00;
   margin-bottom: 20px;
 }
 
@@ -86,18 +86,18 @@
 }
 
 .recent-scans th {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: #f0e6ff;
+  color: #FF4D00;
   padding: 12px;
   text-align: left;
   font-weight: 600;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 2px solid #FF4D00;
 }
 
 .recent-scans td {
   padding: 12px;
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-  color: #b0b8d4;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
 }
 
 .status-badge {
@@ -120,7 +120,7 @@
 
 .status-badge.running {
   background: rgba(77, 171, 247, 0.2);
-  color: #4dabf7;
+  color: #FF4D00;
 }
 
 .status-badge.pending {

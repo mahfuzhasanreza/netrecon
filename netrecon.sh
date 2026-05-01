@@ -130,7 +130,7 @@ generate_html_header() {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF4D00 0%, #FF4D00 100%);
             color: #333;
             padding: 20px;
             min-height: 100vh;
@@ -144,7 +144,7 @@ generate_html_header() {
             overflow: hidden;
         }
         header { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #FF4D00 0%, #FF4D00 100%);
             color: white; 
             padding: 40px; 
             text-align: center;
@@ -161,13 +161,13 @@ generate_html_header() {
         .content { padding: 40px; }
         .info-box { 
             background: #f5f7fa; 
-            border-left: 4px solid #667eea; 
+            border-left: 4px solid #FF4D00; 
             padding: 20px; 
             margin-bottom: 30px; 
             border-radius: 8px;
         }
         .info-box label { 
-            color: #667eea; 
+            color: #FF4D00; 
             font-weight: bold; 
             display: block; 
             margin-bottom: 5px;
