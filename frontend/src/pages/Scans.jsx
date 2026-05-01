@@ -13,18 +13,35 @@ function Scans() {
   const [socket, setSocket] = useState(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [generatingTest, setGeneratingTest] = useState(false);
+  const [selectedScan, setSelectedScan] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    // Initialize socket connection
-    const newSocket = io('http://localhost:5000');
-    setSocket(newSocket);
+    // Initialize socket connection with error handling
+    try {
+      const newSocket = io('http://localhost:5000', {
+        withCredentials: true,
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: 5
+      });
+      setSocket(newSocket);
 
-    // Listen for scan updates
-    newSocket.on('scan-update', (data) => {
-      console.log('Scan update:', data);
-    });
+      // Listen for scan updates
+      newSocket.on('scan-update', (data) => {
+        console.log('Scan update:', data);
+      });
 
-    return () => newSocket.close();
+      newSocket.on('connect_error', (error) => {
+        console.error('Socket connection error:', error);
+      });
+
+      return () => newSocket.close();
+    } catch (err) {
+      console.error('Socket initialization error:', err);
+    }
   }, []);
 
   useEffect(() => {
@@ -90,6 +107,37 @@ function Scans() {
       alert('Error generating test scan: ' + error.message);
     } finally {
       setGeneratingTest(false);
+    }
+  };
+
+  const handleViewScan = async (scanId) => {
+    console.log('🔍 Fetching scan details for:', scanId);
+    try {
+      const response = await axios.get(`/api/scans/${scanId}`);
+      console.log('✅ Scan details received:', response.data);
+      setSelectedScan(response.data);
+      setShowDetails(true);
+    } catch (error) {
+      console.error('❌ Error fetching scan details:', error.response?.data || error.message);
+      alert('Error fetching scan details: ' + (error.response?.data?.error || error.message));
+    }
+  };
+
+  const handleDeleteScan = async (scanId) => {
+    if (!window.confirm('Are you sure you want to delete this scan?')) return;
+    
+    console.log('🗑️ Deleting scan:', scanId);
+    setDeleting(true);
+    try {
+      const response = await axios.delete(`/api/scans/${scanId}`);
+      console.log('✅ Delete response:', response.data);
+      setScans((prev) => prev.filter((s) => s._id !== scanId));
+      alert('Scan deleted successfully');
+    } catch (error) {
+      console.error('❌ Error deleting scan:', error.response?.data || error.message);
+      alert('Error deleting scan: ' + (error.response?.data?.error || error.message));
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -178,14 +226,78 @@ function Scans() {
                 <td>{scan.ports.open.length || 0}</td>
                 <td>{new Date(scan.createdAt).toLocaleDateString()}</td>
                 <td>
-                  <button className="action-btn view">👁️ View</button>
-                  <button className="action-btn delete">🗑️ Delete</button>
+                  <button 
+                    className="action-btn view"
+                    onClick={() => handleViewScan(scan._id)}
+                  >
+                    👁️ View
+                  </button>
+                  <button 
+                    className="action-btn delete"
+                    onClick={() => handleDeleteScan(scan._id)}
+                    disabled={deleting}
+                  >
+                    🗑️ Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Scan Details Modal */}
+      {showDetails && selectedScan && (
+        <div className="modal-overlay" onClick={() => setShowDetails(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>📊 Scan Details</h2>
+              <button 
+                className="modal-close"
+                onClick={() => setShowDetails(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="detail-group">
+                <label>Target:</label>
+                <p>{selectedScan.target}</p>
+              </div>
+              <div className="detail-group">
+                <label>Scan Type:</label>
+                <p>{selectedScan.scanType}</p>
+              </div>
+              <div className="detail-group">
+                <label>Status:</label>
+                <p>
+                  <span className={`status-badge ${selectedScan.status}`}>
+                    {selectedScan.status}
+                  </span>
+                </p>
+              </div>
+              <div className="detail-group">
+                <label>Duration:</label>
+                <p>{selectedScan.duration ? `${selectedScan.duration}s` : 'N/A'}</p>
+              </div>
+              <div className="detail-group">
+                <label>Open Ports:</label>
+                <p>{selectedScan.ports.open.join(', ') || 'None'}</p>
+              </div>
+              <div className="detail-group">
+                <label>Created:</label>
+                <p>{new Date(selectedScan.createdAt).toLocaleString()}</p>
+              </div>
+              {selectedScan.results && selectedScan.results.output && (
+                <div className="detail-group">
+                  <label>Nmap Output:</label>
+                  <pre className="output-box">{selectedScan.results.output}</pre>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

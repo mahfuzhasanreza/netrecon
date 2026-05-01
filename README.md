@@ -92,7 +92,7 @@ chmod +x netrecon.sh
 - ✅ **Dual Reporting**: Both TXT and HTML formats
 
 ### Backend API
-- ✅ **Authentication**: JWT-based user authentication
+- ✅ **Authentication**: Session-based user authentication with HTTP-only cookies
 - ✅ **MongoDB Integration**: Persistent scan history and user data
 - ✅ **RESTful API**: Complete API endpoints for all operations
 - ✅ **WebSocket Support**: Real-time scan updates via Socket.io
@@ -111,13 +111,14 @@ chmod +x netrecon.sh
 ### Authentication
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - User login
-- `GET /api/auth/verify` - Verify JWT token
+- `GET /api/auth/verify` - Verify session
 
 ### Scans
 - `GET /api/scans` - Get all user scans
 - `POST /api/scans` - Create new scan
-- `GET /api/scans/:id` - Get specific scan
-- `PUT /api/scans/:id` - Update scan
+- `POST /api/scans/test-scan` - Create test scan (demo)
+- `GET /api/scans/:id` - Get specific scan details
+- `PUT /api/scans/:id` - Update scan (notes, tags, bookmark)
 - `DELETE /api/scans/:id` - Delete scan
 - `GET /api/scans/stats/overview` - Get statistics
 
@@ -125,6 +126,7 @@ chmod +x netrecon.sh
 - `GET /api/reports` - List all reports
 - `GET /api/reports/:id` - Get report content
 - `GET /api/reports/download/:id` - Download report
+- `POST /api/reports/generate-test` - Generate test report
 
 ### Users
 - `GET /api/users/profile/:id` - Get user profile
@@ -137,8 +139,9 @@ chmod +x netrecon.sh
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/netrecon
-JWT_SECRET=your_secret_key_here
 CORS_ORIGIN=http://localhost:3000
+NMAP_PATH=/usr/bin/nmap
+REPORT_DIR=./reports
 ```
 
 ### Frontend (.env)

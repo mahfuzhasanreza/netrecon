@@ -24,12 +24,40 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
+// Get scan statistics (must be before /:id to avoid route conflict)
+router.get('/stats/overview', authenticate, async (req, res) => {
+  try {
+    const totalScans = await Scan.countDocuments({ userId: req.session.userId });
+    const completedScans = await Scan.countDocuments({
+      userId: req.session.userId,
+      status: 'completed',
+    });
+    const failedScans = await Scan.countDocuments({
+      userId: req.session.userId,
+      status: 'failed',
+    });
+
+    res.json({
+      totalScans,
+      completedScans,
+      failedScans,
+      successRate: totalScans > 0 ? (completedScans / totalScans) * 100 : 0,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Get scan by ID
 router.get('/:id', authenticate, async (req, res) => {
   try {
     const scan = await Scan.findById(req.params.id);
     if (!scan) {
       return res.status(404).json({ error: 'Scan not found' });
+    }
+    // Verify user owns this scan
+    if (scan.userId.toString() !== req.session.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
     }
     res.json(scan);
   } catch (error) {
@@ -62,6 +90,44 @@ router.post('/', authenticate, async (req, res) => {
     res.status(201).json({
       message: 'Scan initiated',
       scan,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Create test scan (define before other POST routes to avoid conflicts)
+router.post('/test-scan', authenticate, async (req, res) => {
+  try {
+    const testScan = new Scan({
+      userId: req.session.userId,
+      target: 'test-host (192.168.1.100)',
+      scanType: 'quick',
+      status: 'completed',
+      startTime: new Date(Date.now() - 30000),
+      endTime: new Date(),
+      duration: 30,
+      results: {
+        output: `Starting Nmap 7.92 ( https://nmap.org ) at ${new Date().toLocaleString()}\nNmap scan report for test-host (192.168.1.100)\nHost is up (0.042s latency).\n\nPORT     STATE SERVICE\n22/tcp   open  ssh\n80/tcp   open  http\n443/tcp  open  https\n3000/tcp open  http-alt\n\nNmap done -- 1 IP address (1 host up) scanned in 30 seconds`,
+      },
+      ports: {
+        open: [22, 80, 443, 3000],
+        closed: [],
+        filtered: [],
+      },
+      threats: {
+        critical: 0,
+        high: 1,
+        medium: 2,
+        low: 1,
+      },
+    });
+
+    await testScan.save();
+
+    res.status(201).json({
+      message: 'Test scan created successfully',
+      scan: testScan,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -146,12 +212,20 @@ async function executeNmapScan(scan) {
 router.put('/:id', authenticate, async (req, res) => {
   try {
     const { notes, tags, isBookmarked } = req.body;
-    const scan = await Scan.findByIdAndUpdate(
+    const scan = await Scan.findById(req.params.id);
+    if (!scan) {
+      return res.status(404).json({ error: 'Scan not found' });
+    }
+    // Verify user owns this scan
+    if (scan.userId.toString() !== req.session.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+    const updatedScan = await Scan.findByIdAndUpdate(
       req.params.id,
       { notes, tags, isBookmarked },
       { new: true }
     );
-    res.json(scan);
+    res.json(updatedScan);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -160,70 +234,16 @@ router.put('/:id', authenticate, async (req, res) => {
 // Delete scan
 router.delete('/:id', authenticate, async (req, res) => {
   try {
+    const scan = await Scan.findById(req.params.id);
+    if (!scan) {
+      return res.status(404).json({ error: 'Scan not found' });
+    }
+    // Verify user owns this scan
+    if (scan.userId.toString() !== req.session.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
     await Scan.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Scan deleted' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Get scan statistics
-router.get('/stats/overview', authenticate, async (req, res) => {
-  try {
-    const totalScans = await Scan.countDocuments({ userId: req.session.userId });
-    const completedScans = await Scan.countDocuments({
-      userId: req.session.userId,
-      status: 'completed',
-    });
-    const failedScans = await Scan.countDocuments({
-      userId: req.session.userId,
-      status: 'failed',
-    });
-
-    res.json({
-      totalScans,
-      completedScans,
-      failedScans,
-      successRate: totalScans > 0 ? (completedScans / totalScans) * 100 : 0,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Create test scan (for demonstration)
-router.post('/test-scan', authenticate, async (req, res) => {
-  try {
-    const testScan = new Scan({
-      userId: req.session.userId,
-      target: 'test-host (192.168.1.100)',
-      scanType: 'quick',
-      status: 'completed',
-      startTime: new Date(Date.now() - 30000), // 30 seconds ago
-      endTime: new Date(),
-      duration: 30,
-      results: {
-        output: `Starting Nmap 7.92 ( https://nmap.org ) at ${new Date().toLocaleString()}\nNmap scan report for test-host (192.168.1.100)\nHost is up (0.042s latency).\n\nPORT     STATE SERVICE\n22/tcp   open  ssh\n80/tcp   open  http\n443/tcp  open  https\n3000/tcp open  http-alt\n\nNmap done -- 1 IP address (1 host up) scanned in 30 seconds`,
-      },
-      ports: {
-        open: [22, 80, 443, 3000],
-        closed: [],
-        filtered: [],
-      },
-      threats: {
-        critical: 0,
-        high: 1,
-        medium: 2,
-        low: 1,
-      },
-    });
-
-    await testScan.save();
-
-    res.status(201).json({
-      message: 'Test scan created successfully',
-      scan: testScan,
-    });
+    res.json({ message: 'Scan deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

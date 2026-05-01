@@ -222,6 +222,92 @@
   color: #b0b8d4;
 }
 
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+  border: 1px solid #667eea;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #667eea;
+}
+
+.modal-header h2 {
+  color: #667eea;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #b0b8d4;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.modal-close:hover {
+  color: #667eea;
+  transform: scale(1.2);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.detail-group {
+  margin-bottom: 20px;
+}
+
+.detail-group label {
+  display: block;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.detail-group p {
+  color: #b0b8d4;
+  margin: 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.output-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #667eea;
+  border-radius: 6px;
+  padding: 15px;
+  color: #51cf66;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  overflow-x: auto;
+  max-height: 300px;
+}
+
 @media (max-width: 768px) {
   .scan-form form {
     grid-template-columns: 1fr;
@@ -229,5 +315,9 @@
 
   .scans-history {
     overflow-x: scroll;
+  }
+
+  .modal-content {
+    width: 95%;
   }
 }
