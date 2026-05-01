@@ -1,0 +1,28 @@
+===== NetRecon Report =====
+Target: scanme.nmap.org
+Date: Fri  1 May 20:01:48 +06 2026
+
+[Quick Scan Selected]
+
+[1] Host Discovery...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 20:01 +06
+Nmap scan report for scanme.nmap.org (45.33.32.156)
+Host is up (0.23s latency).
+Other addresses for scanme.nmap.org (not scanned): 2600:3c01::f03c:91ff:fe18:bb2f
+Nmap done: 1 IP address (1 host up) scanned in 0.53 seconds
+
+[2] Fast Port Scan...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 20:01 +06
+Nmap scan report for scanme.nmap.org (45.33.32.156)
+Host is up (0.58s latency).
+Other addresses for scanme.nmap.org (not scanned): 2600:3c01::f03c:91ff:fe18:bb2f
+Not shown: 94 closed tcp ports (conn-refused)
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+80/tcp    open     http
+1720/tcp  filtered h323q931
+2001/tcp  filtered dc
+5060/tcp  filtered sip
+49152/tcp filtered unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 12.53 seconds
