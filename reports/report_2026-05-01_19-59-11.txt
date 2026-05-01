@@ -1,0 +1,91 @@
+===== NetRecon Report =====
+Target: 127.0.0.1
+Date: Fri  1 May 19:59:11 +06 2026
+
+[1] Host Discovery...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 19:59 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00017s latency).
+Nmap done: 1 IP address (1 host up) scanned in 0.00 seconds
+
+[2] Port Scan...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 19:59 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000079s latency).
+Not shown: 98 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+631/tcp  open  ipp
+5432/tcp open  postgresql
+
+Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
+
+[3] Service Detection...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 19:59 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000058s latency).
+Not shown: 997 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     VERSION
+631/tcp  open  ipp         CUPS 2.4
+5432/tcp open  postgresql  PostgreSQL DB 9.6.0 or later
+9001/tcp open  tor-orport?
+2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port5432-TCP:V=7.94SVN%I=7%D=5/1%Time=69F4B1B5%P=x86_64-pc-linux-gnu%r(
+SF:SMBProgNeg,8C,"E\0\0\0\x8bSFATAL\0VFATAL\0C0A000\0Munsupported\x20front
+SF:end\x20protocol\x2065363\.19778:\x20server\x20supports\x203\.0\x20to\x2
+SF:03\.0\0Fpostmaster\.c\0L2146\0RProcessStartupPacket\0\0");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port9001-TCP:V=7.94SVN%I=7%D=5/1%Time=69F4B1B6%P=x86_64-pc-linux-gnu%r(
+SF:SSLSessionReq,F5,"HTTP/1\.0\x20403\x20Forbidden\r\ncontent-type:\x20tex
+SF:t/html\r\ncontent-length:\x20173\r\n\r\n<html><head><meta\x20charset=ut
+SF:f-8\x20http-equiv=\"Content-Language\"\x20content=\"en\"/><link\x20rel=
+SF:\"stylesheet\"\x20type=\"text/css\"\x20href=\"/error\.css\"/></head><bo
+SF:dy><h1>403</h1></body></html>")%r(TLSSessionReq,F5,"HTTP/1\.0\x20403\x2
+SF:0Forbidden\r\ncontent-type:\x20text/html\r\ncontent-length:\x20173\r\n\
+SF:r\n<html><head><meta\x20charset=utf-8\x20http-equiv=\"Content-Language\
+SF:"\x20content=\"en\"/><link\x20rel=\"stylesheet\"\x20type=\"text/css\"\x
+SF:20href=\"/error\.css\"/></head><body><h1>403</h1></body></html>")%r(SSL
+SF:v23SessionReq,F5,"HTTP/1\.0\x20403\x20Forbidden\r\ncontent-type:\x20tex
+SF:t/html\r\ncontent-length:\x20173\r\n\r\n<html><head><meta\x20charset=ut
+SF:f-8\x20http-equiv=\"Content-Language\"\x20content=\"en\"/><link\x20rel=
+SF:\"stylesheet\"\x20type=\"text/css\"\x20href=\"/error\.css\"/></head><bo
+SF:dy><h1>403</h1></body></html>")%r(JavaRMI,F5,"HTTP/1\.0\x20403\x20Forbi
+SF:dden\r\ncontent-type:\x20text/html\r\ncontent-length:\x20173\r\n\r\n<ht
+SF:ml><head><meta\x20charset=utf-8\x20http-equiv=\"Content-Language\"\x20c
+SF:ontent=\"en\"/><link\x20rel=\"stylesheet\"\x20type=\"text/css\"\x20href
+SF:=\"/error\.css\"/></head><body><h1>403</h1></body></html>")%r(Radmin,F5
+SF:,"HTTP/1\.0\x20403\x20Forbidden\r\ncontent-type:\x20text/html\r\nconten
+SF:t-length:\x20173\r\n\r\n<html><head><meta\x20charset=utf-8\x20http-equi
+SF:v=\"Content-Language\"\x20content=\"en\"/><link\x20rel=\"stylesheet\"\x
+SF:20type=\"text/css\"\x20href=\"/error\.css\"/></head><body><h1>403</h1><
+SF:/body></html>")%r(mongodb,F5,"HTTP/1\.0\x20403\x20Forbidden\r\ncontent-
+SF:type:\x20text/html\r\ncontent-length:\x20173\r\n\r\n<html><head><meta\x
+SF:20charset=utf-8\x20http-equiv=\"Content-Language\"\x20content=\"en\"/><
+SF:link\x20rel=\"stylesheet\"\x20type=\"text/css\"\x20href=\"/error\.css\"
+SF:/></head><body><h1>403</h1></body></html>")%r(tarantool,F5,"HTTP/1\.0\x
+SF:20403\x20Forbidden\r\ncontent-type:\x20text/html\r\ncontent-length:\x20
+SF:173\r\n\r\n<html><head><meta\x20charset=utf-8\x20http-equiv=\"Content-L
+SF:anguage\"\x20content=\"en\"/><link\x20rel=\"stylesheet\"\x20type=\"text
+SF:/css\"\x20href=\"/error\.css\"/></head><body><h1>403</h1></body></html>
+SF:");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.67 seconds
+
+[4] OS Detection...
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-01 19:59 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000061s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE SERVICE
+631/tcp  open  ipp
+5432/tcp open  postgresql
+9001/tcp open  tor-orport
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6.32
+OS details: Linux 2.6.32
+Network Distance: 0 hops
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1.41 seconds
