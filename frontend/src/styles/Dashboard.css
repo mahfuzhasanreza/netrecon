@@ -12,7 +12,7 @@
 
 .stat-card {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 25px;
   transition: all 0.3s ease;
@@ -57,19 +57,19 @@
 
 .chart-container {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 20px;
 }
 
 .chart-container h3 {
-  color: #FF4D00;
+  color: #9575cd;
   margin-bottom: 20px;
 }
 
 .recent-scans {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 20px;
   overflow-x: auto;
@@ -91,7 +91,7 @@
   padding: 12px;
   text-align: left;
   font-weight: 600;
-  border-bottom: 2px solid #FF4D00;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .recent-scans td {

@@ -6,7 +6,7 @@
 
 .scan-form {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 25px;
 }
@@ -99,7 +99,7 @@
 
 .scans-history {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 20px;
   overflow-x: auto;
@@ -153,7 +153,7 @@
   padding: 12px;
   text-align: left;
   font-weight: 600;
-  border-bottom: 2px solid #FF4D00;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .scans-history td {
@@ -243,7 +243,7 @@
 
 .modal-content {
   background: #ffffff;
-  border: 2px solid #FF4D00;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
   width: 90%;
   max-width: 700px;
@@ -256,7 +256,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 2px solid #FF4D00;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .modal-header h2 {
@@ -373,7 +373,7 @@
   gap: 10px;
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 2px solid #FF4D00;
+  border-top: 1px solid #e0e0e0;
 }
 
 .btn-save,

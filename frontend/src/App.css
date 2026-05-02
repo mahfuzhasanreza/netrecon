@@ -10,7 +10,7 @@
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  border-right: 2px solid #FF4D00;
+  border-right: 1px solid #e0e0e0;
   transition: width 0.3s ease;
   overflow-y: auto;
 }
@@ -30,13 +30,13 @@
 .sidebar-header h1 {
   font-size: 1.5em;
   margin: 0;
-  color: #FF4D00;
+  color: #9575cd;
 }
 
 .toggle-btn {
   background: none;
   border: none;
-  color: #FF4D00;
+  color: #9575cd;
   cursor: pointer;
   font-size: 1.2em;
 }
@@ -62,14 +62,14 @@
 
 .nav-item:hover {
   background: #f5f5f5;
-  color: #FF4D00;
-  border-left-color: #FF4D00;
+  color: #9575cd;
+  border-left-color: #ccc;
 }
 
 .nav-item.active {
   background: #f0e6ff;
-  color: #FF4D00;
-  border-left-color: #FF4D00;
+  color: #9575cd;
+  border-left-color: #ccc;
 }
 
 .sidebar-footer {
@@ -119,7 +119,7 @@
 .app-header {
   background: #ffffff;
   padding: 20px;
-  border-bottom: 2px solid #FF4D00;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -127,7 +127,7 @@
 
 .app-header h2 {
   margin: 0;
-  color: #FF4D00;
+  color: #9575cd;
 }
 
 .header-right {
@@ -143,7 +143,7 @@
 .menu-toggle {
   background: none;
   border: none;
-  color: #FF4D00;
+  color: #9575cd;
   cursor: pointer;
   font-size: 1.3em;
   display: none;
