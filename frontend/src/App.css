@@ -30,13 +30,13 @@
 .sidebar-header h1 {
   font-size: 1.5em;
   margin: 0;
-  color: #9575cd;
+  color: #FF4D00;
 }
 
 .toggle-btn {
   background: none;
   border: none;
-  color: #9575cd;
+  color: #FF4D00;
   cursor: pointer;
   font-size: 1.2em;
 }
@@ -62,13 +62,14 @@
 
 .nav-item:hover {
   background: #f5f5f5;
-  color: #9575cd;
+  color: #FF4D00;
   border-left-color: #ccc;
 }
 
 .nav-item.active {
-  background: #f0e6ff;
-  color: #9575cd;
+  background: #ffeae6;
+  /* background: #eacec5; */
+  color: #FF4D00;
   border-left-color: #ccc;
 }
 
@@ -85,7 +86,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px;
-  background: #f0e6ff;
+  background: #ffeae6;
   border-radius: 8px;
   font-size: 0.9em;
   color: #333;
@@ -127,7 +128,7 @@
 
 .app-header h2 {
   margin: 0;
-  color: #9575cd;
+  color: #FF4D00;
 }
 
 .header-right {
@@ -143,7 +144,7 @@
 .menu-toggle {
   background: none;
   border: none;
-  color: #9575cd;
+  color: #FF4D00;
   cursor: pointer;
   font-size: 1.3em;
   display: none;

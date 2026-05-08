@@ -1,0 +1,22 @@
+===== NetRecon Report =====
+Target: localhost
+Date: Sat  2 May 22:30:21 +06 2026
+
+[1] Host Discovery
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-02 22:30 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000044s latency).
+Nmap done: 1 IP address (1 host up) scanned in 0.00 seconds
+
+[2] Fast Port Scan
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-02 22:30 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000059s latency).
+Not shown: 96 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+631/tcp  open  ipp
+3000/tcp open  ppp
+5000/tcp open  upnp
+5432/tcp open  postgresql
+
+Nmap done: 1 IP address (1 host up) scanned in 0.02 seconds

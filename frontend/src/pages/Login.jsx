@@ -41,8 +41,8 @@ function Login({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>🔍 NetRecon</h1>
-        <h2>{isLogin ? 'Login' : 'Register'}</h2>
+        <h1>NetRecon {isLogin ? 'Login' : 'Register'}</h1>
+        <h2></h2>
 
         {error && <div className="error-message">{error}</div>}
 

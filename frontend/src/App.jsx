@@ -56,10 +56,7 @@ function App() {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
-          <h1>🔍 NetRecon</h1>
-          <button className="toggle-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            {sidebarOpen ? <FiX /> : <FiMenu />}
-          </button>
+          <h1>NetRecon</h1>
         </div>
 
         <nav className="sidebar-nav">

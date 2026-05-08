@@ -148,7 +148,7 @@
 }
 
 .scans-history th {
-  background: #f0e6ff;
+  background: #ffeae6;
   color: #FF4D00;
   padding: 12px;
   text-align: left;
@@ -188,7 +188,7 @@
 }
 
 .action-btn.report {
-  background: #f0e6ff;
+  background: #ffeae6;
   color: #FF4D00;
 }
 
@@ -223,7 +223,7 @@
 }
 
 .status-badge.pending {
-  background: #f5f5f5;
+  background: #fbf0ec;
   color: #666;
 }
 
@@ -321,7 +321,7 @@
   color: #555;
   margin: 0;
   padding: 10px;
-  background: #f5f5f5;
+  background: #fbf0ec;
   border-radius: 6px;
 }
 
@@ -418,7 +418,7 @@
 }
 
 .output-box {
-  background: #f5f5f5;
+  background: #fbf0ec;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 15px;
@@ -441,7 +441,7 @@
 
 .tab-btn {
   padding: 8px 16px;
-  background: #f5f5f5;
+  background: #fbf0ec;
   color: #666;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -475,7 +475,7 @@
 .port-status {
   padding: 10px 12px;
   border-radius: 6px;
-  background: #f5f5f5;
+  background: #fbf0ec;
   color: #333;
   margin: 0;
   font-size: 0.9em;

@@ -36,9 +36,6 @@ echo "" >> $report
 if [ "$choice" == "1" ]; then
     scan_type="Quick Scan (Fast Port Scan)"
     
-    generate_txt_header
-    generate_html_header
-    
     info_msg "Running: Host Discovery..."
     echo "[1] Host Discovery" >> $report
     nmap -sn $target >> $report 2>&1
