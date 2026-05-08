@@ -50,9 +50,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/netrecon'
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ MongoDB Connected'))
+.then(() => console.log('MongoDB Connected'))
 .catch((err) => {
-  console.error('❌ MongoDB Connection Error:', err.message);
+  console.error('MongoDB Connection Error:', err.message);
   process.exit(1);
 });
 
@@ -79,10 +79,10 @@ app.get('/api/health', (req, res) => {
 
 // Socket.IO Events
 io.on('connection', (socket) => {
-  console.log('🔌 New client connected:', socket.id);
+  console.log('New client connected:', socket.id);
 
   socket.on('disconnect', () => {
-    console.log('🔌 Client disconnected:', socket.id);
+    console.log('Client disconnected:', socket.id);
   });
 
   // Listen for scan start events
@@ -116,7 +116,7 @@ io.on('connection', (socket) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  console.error('❌ Error:', err.message);
+  console.error('Error:', err.message);
   res.status(err.status || 500).json({
     error: err.message || 'Internal Server Error',
     status: err.status || 500,

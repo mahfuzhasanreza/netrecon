@@ -209,7 +209,7 @@ async function generateScanReport(scan) {
             ` : ''}
 
             <div class="ports-section">
-                <h3>🔌 Port Analysis</h3>
+                <h3>Port Analysis</h3>
                 <div class="port-list">
                     <div class="port-group">
                         <div class="port-group-title">Open Ports (${scan.ports.open.length})</div>

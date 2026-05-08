@@ -166,7 +166,7 @@ async function executeNmapScan(scan) {
       switch (scan.scanType) {
         case 'quick':
           // Quick: Host Discovery + Fast Port Scan
-          console.log(`🔍 [Quick Scan] Running host discovery...`);
+          console.log(`[Quick Scan] Running host discovery...`);
           allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
           console.log(`📡 [Quick Scan] Running fast port scan...`);
           allResults.portScan = await executeCommand(`nmap -F ${scan.target}`);
@@ -174,11 +174,11 @@ async function executeNmapScan(scan) {
 
         case 'full':
           // Full: Host Discovery + Full Port Scan + Service Detection + OS Detection
-          console.log(`🔍 [Full Scan] Running host discovery...`);
+          console.log(`[Full Scan] Running host discovery...`);
           allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
           console.log(`📡 [Full Scan] Running full port scan...`);
           allResults.portScan = await executeCommand(`nmap -p- ${scan.target}`);
-          console.log(`🔧 [Full Scan] Running service detection...`);
+          console.log(`[Full Scan] Running service detection...`);
           allResults.serviceDetection = await executeCommand(`nmap -sV -T4 ${scan.target}`);
           console.log(`🖥️ [Full Scan] Running OS detection...`);
           allResults.osDetection = await executeCommand(`sudo nmap -O -T4 ${scan.target}`);
@@ -198,7 +198,7 @@ async function executeNmapScan(scan) {
 
         case 'vulnerability':
           // Vulnerability: Service detection with NSE scripts
-          console.log(`⚠️ [Vulnerability Scan] Running vulnerability assessment...`);
+          console.log(`[Vulnerability Scan] Running vulnerability assessment...`);
           allResults.serviceDetection = await executeCommand(`nmap -sV -sC ${scan.target}`);
           break;
 
@@ -217,7 +217,7 @@ async function executeNmapScan(scan) {
           break;
 
         default:
-          console.log(`⚠️ [Default] Running quick scan...`);
+          console.log(`[Default] Running quick scan...`);
           allResults.portScan = await executeCommand(`nmap -F ${scan.target}`);
       }
 
@@ -263,12 +263,12 @@ async function executeNmapScan(scan) {
         updatedScan.reportPath = reportPath;
         console.log(`📄 Report generated and stored: ${reportPath}`);
       } catch (reportError) {
-        console.error('⚠️ Warning: Could not generate report:', reportError.message);
+        console.error('Warning: Could not generate report:', reportError.message);
         // Continue even if report generation fails
       }
 
       await updatedScan.save();
-      console.log(`✅ Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
+      console.log(`Scan completed: ${scan._id} - Status: ${updatedScan.status}`);
     } catch (execError) {
       // Fetch fresh scan from DB
       const updatedScan = await Scan.findById(scan._id);
@@ -281,7 +281,7 @@ async function executeNmapScan(scan) {
         (updatedScan.endTime - updatedScan.startTime) / 1000
       );
       await updatedScan.save();
-      console.error(`❌ Scan failed: ${scan._id} - Error: ${execError.message}`);
+      console.error(`Scan failed: ${scan._id} - Error: ${execError.message}`);
     }
   } catch (error) {
     console.error('Error executing nmap:', error);

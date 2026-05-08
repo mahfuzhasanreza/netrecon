@@ -174,12 +174,12 @@ router.post('/generate-test', authenticate, async (req, res) => {
 <body>
     <div class="container">
         <header>
-            <h1>🔍 NetRecon Test Report</h1>
+            <h1>NetRecon Test Report</h1>
             <p>Network Reconnaissance & Vulnerability Assessment</p>
         </header>
         <div class="content">
             <div class="info-box">
-                <label>📍 Target:</label>
+                <label>Target:</label>
                 <p>test-host (192.168.1.100)</p>
             </div>
             <div class="info-box">
@@ -187,11 +187,11 @@ router.post('/generate-test', authenticate, async (req, res) => {
                 <p>${new Date().toLocaleString()}</p>
             </div>
             <div class="info-box">
-                <label>🔧 Scan Type:</label>
+                <label>Scan Type:</label>
                 <p>Quick Scan</p>
             </div>
             <div class="info-box">
-                <label>📊 Scan Results:</label>
+                <label>Scan Results:</label>
             </div>
             <div class="scan-results">
 Starting Nmap 7.92 ( https://nmap.org ) at ${new Date().toLocaleString()}
@@ -216,7 +216,7 @@ Nmap done at ${new Date().toLocaleString()} -- 1 IP address (1 host up) scanned 
 
     await fs.writeFile(reportPath, testHtmlContent);
     
-    console.log(`✅ Test report generated: ${reportFile}`);
+    console.log(`Test report generated: ${reportFile}`);
 
     res.status(201).json({
       message: 'Test report generated successfully',
@@ -224,7 +224,7 @@ Nmap done at ${new Date().toLocaleString()} -- 1 IP address (1 host up) scanned 
       path: `/reports/${reportFile}`,
     });
   } catch (error) {
-    console.error('❌ Error generating test report:', error);
+    console.error('Error generating test report:', error);
     res.status(500).json({ error: error.message });
   }
 });

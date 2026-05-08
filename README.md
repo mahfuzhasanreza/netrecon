@@ -81,30 +81,30 @@ chmod +x netrecon.sh
 # 3. View results in terminal and generated reports
 ```
 
-## 📊 Features
+## Features
 
 ### Bash Script (netrecon.sh)
-- ✅ **7 Scan Types**: Quick, Full, Stealth, UDP, Vulnerability, Web, LAN Discovery
-- ✅ **Color Output**: Full terminal color support with ANSI codes
-- ✅ **Spinner Animation**: Visual feedback during scans
-- ✅ **Progress Tracking**: Real-time scan status
-- ✅ **HTML Reports**: Beautiful styled HTML report generation
-- ✅ **Dual Reporting**: Both TXT and HTML formats
+- **7 Scan Types**: Quick, Full, Stealth, UDP, Vulnerability, Web, LAN Discovery
+- **Color Output**: Full terminal color support with ANSI codes
+- **Spinner Animation**: Visual feedback during scans
+- **Progress Tracking**: Real-time scan status
+- **HTML Reports**: Beautiful styled HTML report generation
+- **Dual Reporting**: Both TXT and HTML formats
 
 ### Backend API
-- ✅ **Authentication**: Session-based user authentication with HTTP-only cookies
-- ✅ **MongoDB Integration**: Persistent scan history and user data
-- ✅ **RESTful API**: Complete API endpoints for all operations
-- ✅ **WebSocket Support**: Real-time scan updates via Socket.io
-- ✅ **Scan Management**: Create, read, update, delete scans
+- **Authentication**: Session-based user authentication with HTTP-only cookies
+- **MongoDB Integration**: Persistent scan history and user data
+- **RESTful API**: Complete API endpoints for all operations
+- **WebSocket Support**: Real-time scan updates via Socket.io
+- **Scan Management**: Create, read, update, delete scans
 
 ### React Dashboard
-- ✅ **User Dashboard**: Overview with statistics and charts
-- ✅ **Scan Management**: Create and manage scans
-- ✅ **Report Viewer**: View and download HTML reports
-- ✅ **User Settings**: Customize preferences
-- ✅ **Dark Theme**: Professional dark UI
-- ✅ **Mobile Responsive**: Works on all devices
+- **User Dashboard**: Overview with statistics and charts
+- **Scan Management**: Create and manage scans
+- **Report Viewer**: View and download HTML reports
+- **User Settings**: Customize preferences
+- **Dark Theme**: Professional dark UI
+- **Mobile Responsive**: Works on all devices
 
 ## 🔑 API Endpoints
 
@@ -160,7 +160,7 @@ REACT_APP_SOCKET_URL=http://localhost:5000
 6. **Web Scan**: Targets common web service ports
 7. **LAN Discovery**: Network discovery via ping sweep (`-sn`)
 
-## 📊 MongoDB Collections
+## MongoDB Collections
 
 ### Users Collection
 ```json
@@ -231,12 +231,12 @@ For detailed documentation, see:
 
 NetRecon is designed for authorized security testing only. Before using this tool:
 
-- ✅ **DO**: Get explicit written permission from network owners
-- ✅ **DO**: Use only on networks you own or have authorization for
-- ✅ **DO**: Report vulnerabilities responsibly
-- ❌ **DON'T**: Scan networks without permission
-- ❌ **DON'T**: Use for malicious purposes
-- ❌ **DON'T**: Violate local laws and regulations
+- **DO**: Get explicit written permission from network owners
+- **DO**: Use only on networks you own or have authorization for
+- **DO**: Report vulnerabilities responsibly
+- **DON'T**: Scan networks without permission
+- **DON'T**: Use for malicious purposes
+- **DON'T**: Violate local laws and regulations
 
 ## 🤝 Contributing
 
