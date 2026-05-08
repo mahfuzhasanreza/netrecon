@@ -168,7 +168,7 @@ async function executeNmapScan(scan) {
           // Quick: Host Discovery + Fast Port Scan
           console.log(`[Quick Scan] Running host discovery...`);
           allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
-          console.log(`📡 [Quick Scan] Running fast port scan...`);
+          console.log(`[Quick Scan] Running fast port scan...`);
           allResults.portScan = await executeCommand(`nmap -F ${scan.target}`);
           break;
 
@@ -176,23 +176,23 @@ async function executeNmapScan(scan) {
           // Full: Host Discovery + Full Port Scan + Service Detection + OS Detection
           console.log(`[Full Scan] Running host discovery...`);
           allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
-          console.log(`📡 [Full Scan] Running full port scan...`);
+          console.log(`[Full Scan] Running full port scan...`);
           allResults.portScan = await executeCommand(`nmap -p- ${scan.target}`);
           console.log(`[Full Scan] Running service detection...`);
           allResults.serviceDetection = await executeCommand(`nmap -sV -T4 ${scan.target}`);
-          console.log(`🖥️ [Full Scan] Running OS detection...`);
+          console.log(`[Full Scan] Running OS detection...`);
           allResults.osDetection = await executeCommand(`sudo nmap -O -T4 ${scan.target}`);
           break;
 
         case 'stealth':
           // Stealth: Stealth port scan
-          console.log(`🕵️ [Stealth Scan] Running stealth scan...`);
+          console.log(`[Stealth Scan] Running stealth scan...`);
           allResults.portScan = await executeCommand(`nmap -sS -T1 --scan-delay 1s ${scan.target}`);
           break;
 
         case 'udp':
           // UDP: UDP port scan
-          console.log(`📡 [UDP Scan] Running UDP port scan...`);
+          console.log(`[UDP Scan] Running UDP port scan...`);
           allResults.portScan = await executeCommand(`sudo nmap -sU -p- ${scan.target}`);
           break;
 
@@ -204,7 +204,7 @@ async function executeNmapScan(scan) {
 
         case 'web':
           // Web: Specific web ports with service detection
-          console.log(`🌐 [Web Scan] Running web service scan...`);
+          console.log(`[Web Scan] Running web service scan...`);
           allResults.portScan = await executeCommand(
             `nmap -p 80,443,8080,8443,3000 -sV -sC ${scan.target}`
           );
@@ -212,7 +212,7 @@ async function executeNmapScan(scan) {
 
         case 'lan-discovery':
           // LAN Discovery: Host discovery only
-          console.log(`🏠 [LAN Discovery] Discovering local network...`);
+          console.log(`[LAN Discovery] Discovering local network...`);
           allResults.hostDiscovery = await executeCommand(`nmap -sn ${scan.target}`);
           break;
 
@@ -261,7 +261,7 @@ async function executeNmapScan(scan) {
       try {
         const reportPath = await generateScanReport(updatedScan);
         updatedScan.reportPath = reportPath;
-        console.log(`📄 Report generated and stored: ${reportPath}`);
+        console.log(`Report generated and stored: ${reportPath}`);
       } catch (reportError) {
         console.error('Warning: Could not generate report:', reportError.message);
         // Continue even if report generation fails

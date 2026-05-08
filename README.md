@@ -1,4 +1,4 @@
-# NetRecon - Full Stack Reconnaissance Toolkit
+# NetRecon - Reconnaissance Toolkit
 
 ## 🎯 Overview
 
