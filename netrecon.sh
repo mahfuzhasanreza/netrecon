@@ -1,13 +1,11 @@
 #!/bin/bash
 
-clear
-echo "==================================="
 echo " NetRecon - Automated Nmap Toolkit "
-echo "==================================="
+echo ""
 
 echo "1. Quick Scan (Fast, Basic port scan)"
 echo "2. Full Scan (Slow, Comprehensive scan)"
-echo "3. Stealth Scan (Slow, IDS Evasion)"
+echo "3. Stealth Scan (Slow)"
 echo "4. UDP Scan (UDP port scanning)"
 echo "5. Vulnerability Scan (Service detection + vulns)"
 echo "6. Web Scan (Web-specific scanning)"
@@ -50,9 +48,6 @@ if [ "$choice" == "1" ]; then
 elif [ "$choice" == "2" ]; then
     scan_type="Full Scan (Comprehensive)"
     
-    generate_txt_header
-    generate_html_header
-    
     info_msg "Running: Host Discovery..."
     echo "[1] Host Discovery" >> $report
     nmap -sn $target >> $report 2>&1
@@ -77,10 +72,7 @@ elif [ "$choice" == "2" ]; then
     status_msg "OS detection completed"
 
 elif [ "$choice" == "3" ]; then
-    scan_type="Stealth Scan (IDS Evasion)"
-    
-    generate_txt_header
-    generate_html_header
+    scan_type="Stealth Scan (Slow)"
     
     info_msg "Running: Stealth Scan (Slow Timing)..."
     echo "[1] Stealth Port Scan" >> $report
@@ -90,9 +82,6 @@ elif [ "$choice" == "3" ]; then
 elif [ "$choice" == "4" ]; then
     scan_type="UDP Scan"
     
-    generate_txt_header
-    generate_html_header
-    
     info_msg "Running: UDP Port Scan..."
     echo "[1] UDP Port Scan" >> $report
     sudo nmap -sU -p- $target >> $report 2>&1
@@ -100,9 +89,6 @@ elif [ "$choice" == "4" ]; then
 
 elif [ "$choice" == "5" ]; then
     scan_type="Vulnerability Scan"
-    
-    generate_txt_header
-    generate_html_header
     
     info_msg "Running: Service Detection for Vulnerabilities..."
     echo "[1] Service Detection" >> $report
@@ -112,9 +98,6 @@ elif [ "$choice" == "5" ]; then
 elif [ "$choice" == "6" ]; then
     scan_type="Web Scan"
     
-    generate_txt_header
-    generate_html_header
-    
     info_msg "Running: Web Service Scanning..."
     echo "[1] Web Service Detection" >> $report
     nmap -p 80,443,8080,8443,3000 -sV -sC $target >> $report 2>&1
@@ -122,9 +105,6 @@ elif [ "$choice" == "6" ]; then
 
 elif [ "$choice" == "7" ]; then
     scan_type="LAN Discovery"
-    
-    generate_txt_header
-    generate_html_header
     
     info_msg "Running: LAN Discovery..."
     echo "[1] Local Network Discovery" >> $report
