@@ -163,47 +163,47 @@ async function generateScanReport(scan) {
 <body>
     <div class="container">
         <header>
-            <h1>🔍 NetRecon Scan Report</h1>
+            <h1>NetRecon Scan Report</h1>
             <p>Network Reconnaissance & Vulnerability Assessment</p>
         </header>
         <div class="content">
             <div class="info-grid">
                 <div class="info-box">
-                    <label>📍 Target</label>
+                    <label>Target</label>
                     <div class="value">${escapeHtml(scan.target)}</div>
                 </div>
                 <div class="info-box">
-                    <label>🔧 Scan Type</label>
+                    <label>Scan Type</label>
                     <div class="value">${capitalize(scan.scanType)}</div>
                 </div>
                 <div class="info-box">
-                    <label>📊 Status</label>
+                    <label>Status</label>
                     <span class="status-badge status-${scan.status}">${capitalize(scan.status)}</span>
                 </div>
                 <div class="info-box">
-                    <label>⏱️ Duration</label>
+                    <label>Duration</label>
                     <div class="value">${scan.duration}s</div>
                 </div>
                 <div class="info-box">
-                    <label>🕐 Started</label>
+                    <label>Started</label>
                     <div class="value">${scanDate}</div>
                 </div>
                 <div class="info-box">
-                    <label>🕑 Ended</label>
+                    <label>Ended</label>
                     <div class="value">${endDate}</div>
                 </div>
             </div>
 
             ${scan.notes ? `
             <div class="info-box">
-                <label>📝 Notes</label>
+                <label>Notes</label>
                 <div class="value">${escapeHtml(scan.notes)}</div>
             </div>
             ` : ''}
 
             ${scan.tags && scan.tags.length > 0 ? `
             <div class="info-box">
-                <label>🏷️ Tags</label>
+                <label>Tags</label>
                 <div class="value">${scan.tags.map(tag => escapeHtml(tag)).join(', ')}</div>
             </div>
             ` : ''}
@@ -212,15 +212,15 @@ async function generateScanReport(scan) {
                 <h3>🔌 Port Analysis</h3>
                 <div class="port-list">
                     <div class="port-group">
-                        <div class="port-group-title">✅ Open Ports (${scan.ports.open.length})</div>
+                        <div class="port-group-title">Open Ports (${scan.ports.open.length})</div>
                         <div class="port-group-content">${openPorts}</div>
                     </div>
                     <div class="port-group">
-                        <div class="port-group-title">❌ Closed Ports (${scan.ports.closed.length})</div>
+                        <div class="port-group-title">Closed Ports (${scan.ports.closed.length})</div>
                         <div class="port-group-content">${closedPorts}</div>
                     </div>
                     <div class="port-group">
-                        <div class="port-group-title">⚠️ Filtered Ports (${scan.ports.filtered.length})</div>
+                        <div class="port-group-title">Filtered Ports (${scan.ports.filtered.length})</div>
                         <div class="port-group-content">${filteredPorts}</div>
                     </div>
                 </div>
@@ -228,35 +228,35 @@ async function generateScanReport(scan) {
 
             ${scan.results && scan.results.hostDiscovery ? `
             <div class="nmap-output">
-                <div class="nmap-title">🔍 Host Discovery Results</div>
+                <div class="nmap-title">Host Discovery Results</div>
                 ${escapeHtml(scan.results.hostDiscovery)}
             </div>
             ` : ''}
 
             ${scan.results && scan.results.portScan ? `
             <div class="nmap-output">
-                <div class="nmap-title">📡 Port Scan Results</div>
+                <div class="nmap-title">Port Scan Results</div>
                 ${escapeHtml(scan.results.portScan)}
             </div>
             ` : ''}
 
             ${scan.results && scan.results.serviceDetection ? `
             <div class="nmap-output">
-                <div class="nmap-title">🔧 Service Detection Results</div>
+                <div class="nmap-title">Service Detection Results</div>
                 ${escapeHtml(scan.results.serviceDetection)}
             </div>
             ` : ''}
 
             ${scan.results && scan.results.osDetection ? `
             <div class="nmap-output">
-                <div class="nmap-title">🖥️ OS Detection Results</div>
+                <div class="nmap-title">OS Detection Results</div>
                 ${escapeHtml(scan.results.osDetection)}
             </div>
             ` : ''}
 
             ${scan.results && scan.results.error ? `
             <div class="nmap-output" style="border-left: 4px solid #ff6b6b;">
-                <div class="nmap-title" style="color: #ff6b6b;">⚠️ Error Details</div>
+                <div class="nmap-title" style="color: #ff6b6b;">Error Details</div>
                 ${escapeHtml(scan.results.error)}
             </div>
             ` : ''}
@@ -270,11 +270,11 @@ async function generateScanReport(scan) {
 </html>`;
 
     await fs.writeFile(reportPath, htmlContent);
-    console.log(`✅ Report generated: ${reportFile}`);
+    console.log(`Report generated: ${reportFile}`);
     
     return `/reports/${reportFile}`;
   } catch (error) {
-    console.error('❌ Error generating report:', error);
+    console.error('Error generating report:', error);
     throw error;
   }
 }
