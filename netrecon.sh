@@ -34,82 +34,60 @@ echo "" >> $report
 if [ "$choice" == "1" ]; then
     scan_type="Quick Scan (Fast Port Scan)"
     
-    info_msg "Running: Host Discovery..."
     echo "[1] Host Discovery" >> $report
     nmap -sn $target >> $report 2>&1
-    status_msg "Host discovery completed"
     
     echo "" >> $report
-    info_msg "Running: Fast Port Scan..."
     echo "[2] Fast Port Scan" >> $report
     nmap -F $target >> $report 2>&1
-    status_msg "Port scan completed"
 
 elif [ "$choice" == "2" ]; then
     scan_type="Full Scan (Comprehensive)"
     
-    info_msg "Running: Host Discovery..."
     echo "[1] Host Discovery" >> $report
     nmap -sn $target >> $report 2>&1
-    status_msg "Host discovery completed"
 
     echo "" >> $report
-    info_msg "Running: Full Port Scan..."
     echo "[2] Full Port Scan" >> $report
     nmap -p- $target >> $report 2>&1
-    status_msg "Full port scan completed"
 
     echo "" >> $report
-    info_msg "Running: Service Detection..."
     echo "[3] Service Detection" >> $report
     nmap -sV -T4 $target >> $report 2>&1
-    status_msg "Service detection completed"
 
     echo "" >> $report
-    info_msg "Running: OS Detection..."
     echo "[4] OS Detection" >> $report
     sudo nmap -O -T4 $target >> $report 2>&1
-    status_msg "OS detection completed"
 
 elif [ "$choice" == "3" ]; then
     scan_type="Stealth Scan (Slow)"
     
-    info_msg "Running: Stealth Scan (Slow Timing)..."
     echo "[1] Stealth Port Scan" >> $report
     nmap -sS -T1 --scan-delay 1s $target >> $report 2>&1
-    status_msg "Stealth scan completed"
 
 elif [ "$choice" == "4" ]; then
     scan_type="UDP Scan"
     
-    info_msg "Running: UDP Port Scan..."
     echo "[1] UDP Port Scan" >> $report
     sudo nmap -sU -p- $target >> $report 2>&1
-    status_msg "UDP scan completed"
 
 elif [ "$choice" == "5" ]; then
     scan_type="Vulnerability Scan"
     
-    info_msg "Running: Service Detection for Vulnerabilities..."
     echo "[1] Service Detection" >> $report
     nmap -sV -sC $target >> $report 2>&1
-    status_msg "Vulnerability assessment completed"
 
 elif [ "$choice" == "6" ]; then
     scan_type="Web Scan"
     
-    info_msg "Running: Web Service Scanning..."
     echo "[1] Web Service Detection" >> $report
     nmap -p 80,443,8080,8443,3000 -sV -sC $target >> $report 2>&1
-    status_msg "Web scan completed"
 
 elif [ "$choice" == "7" ]; then
     scan_type="LAN Discovery"
     
-    info_msg "Running: LAN Discovery..."
     echo "[1] Local Network Discovery" >> $report
     nmap -sn $target >> $report 2>&1
-    status_msg "LAN discovery completed"
 
 else
     error_msg "Invalid Choice!"
