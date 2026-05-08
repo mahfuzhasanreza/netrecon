@@ -64,25 +64,25 @@ function App() {
             className={`nav-item ${currentPage === 'dashboard' ? 'active' : ''}`}
             onClick={() => setCurrentPage('dashboard')}
           >
-            📊 Dashboard
+            Dashboard
           </button>
           <button
             className={`nav-item ${currentPage === 'scans' ? 'active' : ''}`}
             onClick={() => setCurrentPage('scans')}
           >
-            🔎 Scans
+            Scans
           </button>
           <button
             className={`nav-item ${currentPage === 'reports' ? 'active' : ''}`}
             onClick={() => setCurrentPage('reports')}
           >
-            📄 Reports
+            Reports
           </button>
           <button
             className={`nav-item ${currentPage === 'settings' ? 'active' : ''}`}
             onClick={() => setCurrentPage('settings')}
           >
-            ⚙️ Settings
+            Settings
           </button>
         </nav>
 

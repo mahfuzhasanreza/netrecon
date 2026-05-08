@@ -16,12 +16,12 @@ function Reports() {
 
   const fetchReports = async () => {
     try {
-      console.log('📥 Fetching reports list...');
+      console.log('Fetching reports list...');
       const response = await axios.get('/api/reports');
-      console.log('✅ Reports fetched:', response.data.length, 'reports found');
+      console.log('Reports fetched:', response.data.length, 'reports found');
       setReports(response.data);
     } catch (error) {
-      console.error('❌ Error fetching reports:', error.response?.data || error.message);
+      console.error('Error fetching reports:', error.response?.data || error.message);
       alert('Error loading reports: ' + (error.response?.data?.error || error.message));
     } finally {
       setLoading(false);
@@ -29,18 +29,18 @@ function Reports() {
   };
 
   const handleViewReport = async (reportName) => {
-    console.log('👁️ Viewing report:', reportName);
+    console.log('Viewing report:', reportName);
     setPreviewLoading(true);
     try {
       const response = await axios.get(`/api/reports/${reportName}`);
-      console.log('✅ Report content loaded');
+      console.log('Report content loaded');
       setSelectedReport({
         name: reportName,
         content: response.data,
       });
       setShowPreview(true);
     } catch (error) {
-      console.error('❌ Error loading report:', error.response?.data || error.message);
+      console.error('Error loading report:', error.response?.data || error.message);
       alert('Error loading report: ' + (error.response?.data?.error || error.message));
     } finally {
       setPreviewLoading(false);
@@ -48,14 +48,14 @@ function Reports() {
   };
 
   const handleDownload = async (reportName) => {
-    console.log('⬇️ Downloading report:', reportName);
+    console.log('Downloading report:', reportName);
     try {
       const response = await axios.get(
         `/api/reports/download/${reportName}`,
         { responseType: 'blob' }
       );
 
-      console.log('✅ Report downloaded, size:', response.data.size, 'bytes');
+      console.log('Report downloaded, size:', response.data.size, 'bytes');
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -64,24 +64,24 @@ function Reports() {
       link.click();
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
-      console.log('✅ Download completed');
+      console.log('Download completed');
     } catch (error) {
-      console.error('❌ Error downloading report:', error.response?.data || error.message);
+      console.error('Error downloading report:', error.response?.data || error.message);
       alert('Error downloading report: ' + (error.response?.data?.error || error.message));
     }
   };
 
   const generateTestReport = async () => {
-    console.log('🔄 Generating test report...');
+    console.log('Generating test report...');
     setGeneratingTest(true);
     try {
       const response = await axios.post('/api/reports/generate-test');
-      console.log('✅ Test report created:', response.data.reportName);
+      console.log('Test report created:', response.data.reportName);
       // Refresh reports list
       await fetchReports();
       alert('Test report generated successfully!');
     } catch (error) {
-      console.error('❌ Error generating test report:', error.response?.data || error.message);
+      console.error('Error generating test report:', error.response?.data || error.message);
       alert('Error generating test report: ' + (error.response?.data?.error || error.message));
     } finally {
       setGeneratingTest(false);
@@ -89,13 +89,13 @@ function Reports() {
   };
 
   if (loading) {
-    return <div className="reports"><p>⏳ Loading reports...</p></div>;
+    return <div className="reports"><p>Loading reports...</p></div>;
   }
 
   return (
     <div className="reports">
-      <div className="reports-header">
-        <h2>📄 Scan Reports</h2>
+      {/* <div className="reports-header">
+        <h2>Scan Reports</h2>
         <button 
           onClick={generateTestReport} 
           disabled={generatingTest}
@@ -103,18 +103,18 @@ function Reports() {
         >
           {generatingTest ? '⏳ Generating...' : '✨ Generate Test Report'}
         </button>
-      </div>
+      </div> */}
       <div className="reports-grid">
         {reports.length === 0 ? (
           <div className="no-reports">
-            <p>📭 No reports found</p>
+            <p>No reports found</p>
             <p className="hint">Run scans to generate reports</p>
           </div>
         ) : (
           reports.map((report, index) => (
             <div key={index} className="report-card">
               <div className="report-header">
-                <h3>📋 {report.name}</h3>
+                <h3>{report.name}</h3>
               </div>
               <div className="report-body">
                 <p className="report-date">
@@ -129,13 +129,13 @@ function Reports() {
                   className="action-btn view"
                   disabled={previewLoading}
                 >
-                  👁️ View
+                  View
                 </button>
                 <button
                   onClick={() => handleDownload(report.name)}
                   className="action-btn download"
                 >
-                  ⬇️ Download
+                  Download
                 </button>
               </div>
             </div>
@@ -148,7 +148,7 @@ function Reports() {
         <div className="preview-overlay" onClick={() => setShowPreview(false)}>
           <div className="preview-modal" onClick={(e) => e.stopPropagation()}>
             <div className="preview-header">
-              <h2>📋 {selectedReport.name}</h2>
+              <h2>{selectedReport.name}</h2>
               <button 
                 className="preview-close"
                 onClick={() => setShowPreview(false)}
@@ -158,7 +158,7 @@ function Reports() {
             </div>
             <div className="preview-content">
               {previewLoading ? (
-                <p>⏳ Loading report...</p>
+                <p>Loading report...</p>
               ) : (
                 <iframe
                   srcDoc={selectedReport.content}

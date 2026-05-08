@@ -176,9 +176,8 @@
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
-  width: 90%;
-  max-width: 1000px;
-  max-height: 80vh;
+  width: 70%;
+  height: 95%;
   overflow: hidden;
   display: flex;
   flex-direction: column;

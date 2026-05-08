@@ -81,6 +81,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
+  margin-bottom: 22px;
 }
 
 .submit-btn:hover:not(:disabled) {

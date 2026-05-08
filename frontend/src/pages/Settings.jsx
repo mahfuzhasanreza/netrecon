@@ -42,7 +42,7 @@ function Settings({ user }) {
       <div className="settings-container">
         {/* Profile Settings */}
         <div className="settings-section">
-          <h3>👤 Profile Settings</h3>
+          <h3>Profile Settings</h3>
           <div className="form-group">
             <label>First Name</label>
             <input
@@ -84,46 +84,7 @@ function Settings({ user }) {
           </div>
         </div>
 
-        {/* Preferences */}
-        <div className="settings-section">
-          <h3>⚙️ Preferences</h3>
-
-          <div className="form-group">
-            <label>Theme</label>
-            <select
-              name="theme"
-              value={preferences.theme || 'dark'}
-              onChange={handlePreferenceChange}
-            >
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </div>
-
-          <div className="form-group checkbox">
-            <label>
-              <input
-                type="checkbox"
-                name="emailNotifications"
-                checked={preferences.emailNotifications || false}
-                onChange={handlePreferenceChange}
-              />
-              Email Notifications
-            </label>
-          </div>
-
-          <div className="form-group checkbox">
-            <label>
-              <input
-                type="checkbox"
-                name="scanNotifications"
-                checked={preferences.scanNotifications || false}
-                onChange={handlePreferenceChange}
-              />
-              Scan Notifications
-            </label>
-          </div>
-        </div>
+        
 
         {/* Save Button */}
         <button
@@ -131,7 +92,7 @@ function Settings({ user }) {
           disabled={saving}
           className="save-btn"
         >
-          {saving ? '💾 Saving...' : '💾 Save Changes'}
+          {saving ? 'Saving...' : 'Save'}
         </button>
 
         {message && <div className="message">{message}</div>}

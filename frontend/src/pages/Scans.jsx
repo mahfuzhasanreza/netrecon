@@ -116,17 +116,17 @@ function Scans() {
   };
 
   const handleViewScan = async (scanId) => {
-    console.log('🔍 Fetching scan details for:', scanId);
+    console.log('Fetching scan details for:', scanId);
     try {
       const response = await axios.get(`/api/scans/${scanId}`);
-      console.log('✅ Scan details received:', response.data);
+      console.log('Scan details received:', response.data);
       setSelectedScan(response.data);
       setScanNotes(response.data.notes || '');
       setScanTags(response.data.tags ? response.data.tags.join(', ') : '');
       setIsBookmarked(response.data.isBookmarked || false);
       setShowDetails(true);
     } catch (error) {
-      console.error('❌ Error fetching scan details:', error.response?.data || error.message);
+      console.error('Error fetching scan details:', error.response?.data || error.message);
       alert('Error fetching scan details: ' + (error.response?.data?.error || error.message));
     }
   };
@@ -134,15 +134,15 @@ function Scans() {
   const handleDeleteScan = async (scanId) => {
     if (!window.confirm('Are you sure you want to delete this scan?')) return;
     
-    console.log('🗑️ Deleting scan:', scanId);
+    console.log('Deleting scan:', scanId);
     setDeleting(true);
     try {
       const response = await axios.delete(`/api/scans/${scanId}`);
-      console.log('✅ Delete response:', response.data);
+      console.log('Delete response:', response.data);
       setScans((prev) => prev.filter((s) => s._id !== scanId));
       alert('Scan deleted successfully');
     } catch (error) {
-      console.error('❌ Error deleting scan:', error.response?.data || error.message);
+      console.error('Error deleting scan:', error.response?.data || error.message);
       alert('Error deleting scan: ' + (error.response?.data?.error || error.message));
     } finally {
       setDeleting(false);
@@ -162,7 +162,7 @@ function Scans() {
       };
       
       const response = await axios.put(`/api/scans/${selectedScan._id}`, updateData);
-      console.log('✅ Update response:', response.data);
+      console.log('Update response:', response.data);
       
       // Update local state
       setScans((prev) =>
@@ -171,7 +171,7 @@ function Scans() {
       setSelectedScan(response.data);
       alert('Scan updated successfully');
     } catch (error) {
-      console.error('❌ Error updating scan:', error.response?.data || error.message);
+      console.error('Error updating scan:', error.response?.data || error.message);
       alert('Error updating scan: ' + (error.response?.data?.error || error.message));
     } finally {
       setUpdating(false);
@@ -186,7 +186,7 @@ function Scans() {
     <div className="scans">
       {/* New Scan Form */}
       <div className="scan-form">
-        <h3>🔎 Start New Scan</h3>
+        <h3>Start New Scan</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Target IP / Domain</label>
@@ -218,25 +218,19 @@ function Scans() {
           </div>
 
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? '⏳ Starting Scan...' : '▶️ Start Scan'}
+            {loading ? 'Starting Scan...' : 'Start Scan'}
           </button>
         </form>
-        <button 
-          onClick={generateTestScan} 
-          disabled={generatingTest}
-          className="test-scan-btn"
-        >
-          {generatingTest ? '⏳ Creating...' : '✨ Create Test Scan'}
-        </button>
+      
       </div>
 
       {/* Scans History */}
       <div className="scans-history">
         <div className="history-header">
-          <h3>📋 Scan History</h3>
+          <h3>Scan History</h3>
           <div className="refresh-status">
             {scans.some(s => s.status === 'pending' || s.status === 'running') && (
-              <span className="live-badge">🔄 Live Updates Enabled</span>
+              <span className="live-badge">Live Updates Enabled</span>
             )}
           </div>
         </div>
@@ -259,7 +253,7 @@ function Scans() {
                 <td className="scan-type">{scan.scanType}</td>
                 <td>
                   <span className={`status-badge ${scan.status}`}>
-                    {scan.status === 'running' ? '⏳ ' : ''}
+                    {scan.status === 'running' ? '' : ''}
                     {scan.status}
                   </span>
                 </td>
@@ -271,7 +265,7 @@ function Scans() {
                     className="action-btn view"
                     onClick={() => handleViewScan(scan._id)}
                   >
-                    👁️ View
+                    View
                   </button>
                   {scan.reportPath && (
                     <button 
@@ -279,7 +273,7 @@ function Scans() {
                       onClick={() => window.open(scan.reportPath, '_blank')}
                       title="Open generated report"
                     >
-                      📄 Report
+                      Report
                     </button>
                   )}
                   <button 
@@ -287,7 +281,7 @@ function Scans() {
                     onClick={() => handleDeleteScan(scan._id)}
                     disabled={deleting}
                   >
-                    🗑️ Delete
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -301,7 +295,7 @@ function Scans() {
         <div className="modal-overlay" onClick={() => setShowDetails(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>📊 Scan Details</h2>
+              <h2>Scan Details</h2>
               <div className="modal-actions-top">
                 <button 
                   className={`bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`}
@@ -347,7 +341,7 @@ function Scans() {
                     className="report-link-btn"
                     onClick={() => window.open(selectedScan.reportPath, '_blank')}
                   >
-                    📄 Open Report ↗️
+                    Open Report
                   </button>
                 </div>
               )}
@@ -388,13 +382,13 @@ function Scans() {
                 <label>Port Information:</label>
                 <div className="ports-info">
                   {selectedScan.ports.open.length > 0 && (
-                    <p className="port-status open">🟢 Open: {selectedScan.ports.open.join(', ')}</p>
+                    <p className="port-status open">Open: {selectedScan.ports.open.join(', ')}</p>
                   )}
                   {selectedScan.ports.closed.length > 0 && (
-                    <p className="port-status closed">🔴 Closed: {selectedScan.ports.closed.join(', ')}</p>
+                    <p className="port-status closed">Closed: {selectedScan.ports.closed.join(', ')}</p>
                   )}
                   {selectedScan.ports.filtered.length > 0 && (
-                    <p className="port-status filtered">🟡 Filtered: {selectedScan.ports.filtered.join(', ')}</p>
+                    <p className="port-status filtered">Filtered: {selectedScan.ports.filtered.join(', ')}</p>
                   )}
                   {selectedScan.ports.open.length === 0 && 
                    selectedScan.ports.closed.length === 0 && 
@@ -414,7 +408,7 @@ function Scans() {
                         className={`tab-btn ${activeResultTab === 'hostDiscovery' ? 'active' : ''}`}
                         onClick={() => setActiveResultTab('hostDiscovery')}
                       >
-                        🔍 Host Discovery
+                        Host Discovery
                       </button>
                     )}
                     {selectedScan.results.portScan && (
@@ -422,7 +416,7 @@ function Scans() {
                         className={`tab-btn ${activeResultTab === 'portScan' ? 'active' : ''}`}
                         onClick={() => setActiveResultTab('portScan')}
                       >
-                        📡 Port Scan
+                        Port Scan
                       </button>
                     )}
                     {selectedScan.results.serviceDetection && (
@@ -430,7 +424,7 @@ function Scans() {
                         className={`tab-btn ${activeResultTab === 'serviceDetection' ? 'active' : ''}`}
                         onClick={() => setActiveResultTab('serviceDetection')}
                       >
-                        🔧 Service Detection
+                        Service Detection
                       </button>
                     )}
                     {selectedScan.results.osDetection && (
@@ -438,7 +432,7 @@ function Scans() {
                         className={`tab-btn ${activeResultTab === 'osDetection' ? 'active' : ''}`}
                         onClick={() => setActiveResultTab('osDetection')}
                       >
-                        🖥️ OS Detection
+                        OS Detection
                       </button>
                     )}
                     {selectedScan.results.error && (
@@ -446,7 +440,7 @@ function Scans() {
                         className={`tab-btn ${activeResultTab === 'error' ? 'active' : ''}`}
                         onClick={() => setActiveResultTab('error')}
                       >
-                        ⚠️ Error
+                        Error
                       </button>
                     )}
                   </div>
@@ -466,7 +460,7 @@ function Scans() {
                   onClick={handleUpdateScan}
                   disabled={updating}
                 >
-                  {updating ? '⏳ Saving...' : '💾 Save Changes'}
+                  {updating ? 'Saving...' : 'Save'}
                 </button>
                 <button 
                   className="btn-cancel"
