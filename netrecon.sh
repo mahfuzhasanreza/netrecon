@@ -11,7 +11,7 @@ echo "5. Vulnerability Scan (Service detection + vulns)"
 echo "6. Web Scan (Web-specific scanning)"
 echo "7. LAN Discovery (Discover local network)"
 echo "8. Metasploit Vulnerability Analysis"
-echo "9. Exploit Suggestion Engine"
+echo "9. Metasploit Exploit Suggestion Engine"
 echo ""
 
 read -p "Choose Scan Type [1-9]: " choice
