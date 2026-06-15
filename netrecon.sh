@@ -10,9 +10,10 @@ echo "4. UDP Scan (UDP port scanning)"
 echo "5. Vulnerability Scan (Service detection + vulns)"
 echo "6. Web Scan (Web-specific scanning)"
 echo "7. LAN Discovery (Discover local network)"
+echo "8. Metasploit Vulnerability Analysis"
 echo ""
 
-read -p "Choose Scan Type [1-7]: " choice
+read -p "Choose Scan Type [1-8]: " choice
 read -p "Enter Target IP / Domain: " target
 
 # Remove http/https if user enters URL
@@ -88,6 +89,10 @@ elif [ "$choice" == "7" ]; then
     
     echo "[1] Local Network Discovery" >> $report
     nmap -sn $target >> $report 2>&1
+
+elif [ "$choice" == "8" ]; then
+    scan_type="Metasploit Analysis Mode"
+    bash modules/msf_analysis.sh "$target"
 
 else
     error_msg "Invalid Choice!"

@@ -1,0 +1,4 @@
+===== NetRecon Report =====
+Target: localhost
+Date: Mon 15 Jun 13:45:44 +06 2026
+

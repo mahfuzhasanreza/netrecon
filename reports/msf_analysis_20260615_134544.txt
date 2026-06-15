@@ -1,0 +1,29 @@
+[0m[1m[34m[*][0m Importing 'Nmap XML' data
+[1m[34m[*][0m Import: Parsing with 'Nokogiri v1.18.10'
+[1m[34m[*][0m Importing host 127.0.0.1
+[1m[34m[*][0m Successfully imported /home/mahfuz/study/cs/NetRecon/exports/msf_20260615_134544.xml
+[0mServices
+========
+
+host      port  proto  name        state  info         resource  parents
+----      ----  -----  ----        -----  ----         --------  -------
+127.0.0.  631   tcp                open                {}
+1
+127.0.0.  631   tcp    ipp         open   CUPS 2.4     {}
+1
+127.0.0.  5432  tcp    postgresql  open   PostgreSQL   {}
+1                                         DB 9.6.0 or
+                                           later
+127.0.0.  9001  tcp    tor-orport  open                {}
+1
+
+[0m
+Vulnerabilities
+===============
+
+Timestamp       Host       Service    Resource  Name      References
+---------       ----       -------    --------  ----      ----------
+2026-06-15 07:  127.0.0.1  (631/tcp)  {}        CUPS 2.4  CVE-2024-47850
+54:44 UTC
+
+[0m
