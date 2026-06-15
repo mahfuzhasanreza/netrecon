@@ -25,14 +25,7 @@ const authenticate = (req, res, next) => {
   next();
 };
 
-/**
- * Parse report filename to extract metadata
- * Filename patterns:
- *   scan_<mongoId>_<timestamp>.html  - generated from scan
- *   test-report-<timestamp>.html     - test report
- *   report_<date>.txt                - shell script report
- *   msf_report_<date>.txt            - metasploit shell report
- */
+
 function parseReportFilename(filename) {
   // Pattern: scan_<24-char hex id>_<timestamp>.html
   const scanMatch = filename.match(/^scan_([a-f0-9]{24})_(.+)\.html$/);
