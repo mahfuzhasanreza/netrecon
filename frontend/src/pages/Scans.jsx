@@ -269,7 +269,7 @@ function Scans() {
                   >
                     View
                   </button>
-                  {scan.reportPath && (
+                  {/* {scan.reportPath && (
                     <button 
                       className="action-btn report"
                       onClick={() => window.open(scan.reportPath, '_blank')}
@@ -277,7 +277,7 @@ function Scans() {
                     >
                       Report
                     </button>
-                  )}
+                  )} */}
                   <button 
                     className="action-btn delete"
                     onClick={() => handleDeleteScan(scan._id)}
