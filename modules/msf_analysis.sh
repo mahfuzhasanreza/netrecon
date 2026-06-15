@@ -3,30 +3,45 @@
 TARGET=$1
 DATE=$(date +"%Y%m%d_%H%M%S")
 
-mkdir -p exports reports msf
+mkdir -p exports reports
 
 XML="exports/msf_$DATE.xml"
-REPORT="reports/msf_analysis_$DATE.txt"
+REPORT="reports/msf_report_$DATE.txt"
 
-echo "[+] Running MSF-ready scan..."
+source modules/ui.sh
 
-# Step 1: Nmap with vuln scripts
-sudo nmap -sV -O --script vuln "$TARGET" -oX "$XML"
+print_header
+loading
 
-echo "[+] Scan Completed"
-echo "[+] XML Saved: $XML"
+echo "[+] Running Vulnerability Scan..." | tee "$REPORT"
 
-# Step 2: Import into Metasploit DB
-echo "[+] Importing into Metasploit..."
+sudo nmap -sV -O --script vuln "$TARGET" -oX "$XML" >> "$REPORT" 2>&1
 
-msfdb init > /dev/null 2>&1
+echo "" >> "$REPORT"
+echo "========================" >> "$REPORT"
+echo " METASPLOIT IMPORT " >> "$REPORT"
+echo "========================" >> "$REPORT"
 
-msfconsole -q -x "
+if command -v msfconsole >/dev/null; then
+    msfdb init >/dev/null 2>&1
+
+    msfconsole -q -x "
 db_import $XML;
 services;
 vulns;
 exit
 " >> "$REPORT"
+else
+    echo "[!] Metasploit not installed" >> "$REPORT"
+fi
 
-echo "[+] Metasploit Analysis Done"
-echo "[+] Report: $REPORT"
+echo "" >> "$REPORT"
+
+# RISK ENGINE
+bash modules/risk_engine.sh "$REPORT" >> "$REPORT"
+
+# SUMMARY
+bash modules/summary_generator.sh "$REPORT" >> "$REPORT"
+
+echo ""
+echo "✔ Report saved: $REPORT"

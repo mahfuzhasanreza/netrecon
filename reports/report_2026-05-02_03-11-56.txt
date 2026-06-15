@@ -1,9 +1,0 @@
-===== NetRecon Report =====
-Target: localhost
-Date: Sat  2 May 03:11:56 +06 2026
-
-[1] Local Network Discovery
-Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-05-02 03:11 +06
-Nmap scan report for localhost (127.0.0.1)
-Host is up (0.000044s latency).
-Nmap done: 1 IP address (1 host up) scanned in 0.00 seconds
