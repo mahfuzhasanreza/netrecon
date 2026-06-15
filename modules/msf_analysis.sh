@@ -44,4 +44,4 @@ bash modules/risk_engine.sh "$REPORT" >> "$REPORT"
 bash modules/summary_generator.sh "$REPORT" >> "$REPORT"
 
 echo ""
-echo "✔ Report saved: $REPORT"
+echo "Report saved: $REPORT"
