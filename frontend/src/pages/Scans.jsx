@@ -152,7 +152,7 @@ function Scans() {
   const handleUpdateScan = async () => {
     if (!selectedScan) return;
     
-    console.log('✏️ Updating scan:', selectedScan._id);
+    console.log('Updating scan:', selectedScan._id);
     setUpdating(true);
     try {
       const updateData = {
@@ -214,6 +214,8 @@ function Scans() {
               <option value="vulnerability">Vulnerability Scan</option>
               <option value="web">Web Scan</option>
               <option value="lan-discovery">LAN Discovery</option>
+              <option value="msf-vulnerability">Metasploit Vulnerability Analysis</option>
+              <option value="msf-exploit">Metasploit Exploit Suggestion</option>
             </select>
           </div>
 
@@ -433,6 +435,38 @@ function Scans() {
                         onClick={() => setActiveResultTab('osDetection')}
                       >
                         OS Detection
+                      </button>
+                    )}
+                    {selectedScan.results.msfAnalysis && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'msfAnalysis' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('msfAnalysis')}
+                      >
+                        MSF Analysis
+                      </button>
+                    )}
+                    {selectedScan.results.msfExploit && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'msfExploit' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('msfExploit')}
+                      >
+                        Exploit Suggestions
+                      </button>
+                    )}
+                    {selectedScan.results.riskLevel && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'riskLevel' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('riskLevel')}
+                      >
+                        Risk Level
+                      </button>
+                    )}
+                    {selectedScan.results.summary && (
+                      <button
+                        className={`tab-btn ${activeResultTab === 'summary' ? 'active' : ''}`}
+                        onClick={() => setActiveResultTab('summary')}
+                      >
+                        Summary
                       </button>
                     )}
                     {selectedScan.results.error && (
