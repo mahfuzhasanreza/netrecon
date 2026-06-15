@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axiosConfig.jsx';
 import '../styles/Reports.css';
 
+// Color mapping for scan type badges
+const SCAN_TYPE_COLORS = {
+  'quick': { bg: '#e3f2fd', color: '#1565c0' },
+  'full': { bg: '#e8f5e9', color: '#2e7d32' },
+  'stealth': { bg: '#f3e5f5', color: '#7b1fa2' },
+  'udp': { bg: '#fff3e0', color: '#e65100' },
+  'vulnerability': { bg: '#fce4ec', color: '#c62828' },
+  'web': { bg: '#e0f7fa', color: '#00695c' },
+  'lan-discovery': { bg: '#f1f8e9', color: '#558b2f' },
+  'msf-vulnerability': { bg: '#ede7f6', color: '#4527a0' },
+  'msf-exploit': { bg: '#fff8e1', color: '#f57f17' },
+};
+
 function Reports() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +41,7 @@ function Reports() {
     }
   };
 
-  const handleViewReport = async (reportName) => {
+  const handleViewReport = async (reportName, displayName) => {
     console.log('Viewing report:', reportName);
     setPreviewLoading(true);
     try {
@@ -36,6 +49,7 @@ function Reports() {
       console.log('Report content loaded');
       setSelectedReport({
         name: reportName,
+        displayName: displayName || reportName,
         content: response.data,
       });
       setShowPreview(true);
@@ -88,6 +102,14 @@ function Reports() {
     }
   };
 
+  const getScanTypeBadgeStyle = (scanType) => {
+    const colors = SCAN_TYPE_COLORS[scanType] || { bg: '#f5f5f5', color: '#616161' };
+    return {
+      background: colors.bg,
+      color: colors.color,
+    };
+  };
+
   if (loading) {
     return <div className="reports"><p>Loading reports...</p></div>;
   }
@@ -114,7 +136,15 @@ function Reports() {
           reports.map((report, index) => (
             <div key={index} className="report-card">
               <div className="report-header">
-                <h3>{report.name}</h3>
+                <h3>{report.displayName || report.name}</h3>
+                {report.scanTypeLabel && (
+                  <span
+                    className="scan-type-badge"
+                    style={getScanTypeBadgeStyle(report.scanType)}
+                  >
+                    {report.scanTypeLabel}
+                  </span>
+                )}
               </div>
               <div className="report-body">
                 <p className="report-date">
@@ -125,7 +155,7 @@ function Reports() {
               </div>
               <div className="report-actions">
                 <button
-                  onClick={() => handleViewReport(report.name)}
+                  onClick={() => handleViewReport(report.name, report.displayName)}
                   className="action-btn view"
                   disabled={previewLoading}
                 >
@@ -148,7 +178,7 @@ function Reports() {
         <div className="preview-overlay" onClick={() => setShowPreview(false)}>
           <div className="preview-modal" onClick={(e) => e.stopPropagation()}>
             <div className="preview-header">
-              <h2>{selectedReport.name}</h2>
+              <h2>{selectedReport.displayName || selectedReport.name}</h2>
               <button 
                 className="preview-close"
                 onClick={() => setShowPreview(false)}
@@ -175,3 +205,4 @@ function Reports() {
 }
 
 export default Reports;
+

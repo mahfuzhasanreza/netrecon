@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs').promises;
 const path = require('path');
+const Scan = require('../models/Scan');
+
+// Scan type display name mapping
+const SCAN_TYPE_LABELS = {
+  'quick': 'Quick Scan',
+  'full': 'Full Scan',
+  'stealth': 'Stealth Scan',
+  'udp': 'UDP Scan',
+  'vulnerability': 'Vulnerability Scan',
+  'web': 'Web Scan',
+  'lan-discovery': 'LAN Discovery',
+  'msf-vulnerability': 'Metasploit Vulnerability Analysis',
+  'msf-exploit': 'Metasploit Exploit Suggestion',
+};
 
 // Middleware to verify authentication via session
 const authenticate = (req, res, next) => {
@@ -11,6 +25,39 @@ const authenticate = (req, res, next) => {
   next();
 };
 
+/**
+ * Parse report filename to extract metadata
+ * Filename patterns:
+ *   scan_<mongoId>_<timestamp>.html  - generated from scan
+ *   test-report-<timestamp>.html     - test report
+ *   report_<date>.txt                - shell script report
+ *   msf_report_<date>.txt            - metasploit shell report
+ */
+function parseReportFilename(filename) {
+  // Pattern: scan_<24-char hex id>_<timestamp>.html
+  const scanMatch = filename.match(/^scan_([a-f0-9]{24})_(.+)\.html$/);
+  if (scanMatch) {
+    return { scanId: scanMatch[1], type: 'scan' };
+  }
+
+  // Pattern: test-report-<timestamp>.html
+  if (filename.startsWith('test-report-')) {
+    return { scanId: null, type: 'test' };
+  }
+
+  // Pattern: msf_report_<date>.txt
+  if (filename.startsWith('msf_report_')) {
+    return { scanId: null, type: 'msf' };
+  }
+
+  // Pattern: report_<date>.txt
+  if (filename.startsWith('report_')) {
+    return { scanId: null, type: 'shell' };
+  }
+
+  return { scanId: null, type: 'unknown' };
+}
+
 // Get all reports
 router.get('/', authenticate, async (req, res) => {
   try {
@@ -19,19 +66,55 @@ router.get('/', authenticate, async (req, res) => {
     try {
       const files = await fs.readdir(reportsDir);
 
+      // Accept both .html and .txt report files
+      const reportFiles = files.filter(
+        (file) => file.endsWith('.html') || file.endsWith('.txt')
+      );
+
       const reports = await Promise.all(
-        files
-          .filter((file) => file.endsWith('.html'))
-          .map(async (file) => {
-            const filePath = path.join(reportsDir, file);
-            const stats = await fs.stat(filePath);
-            return {
-              name: file,
-              path: `/reports/${file}`,
-              size: stats.size,
-              createdAt: stats.birthtime,
-            };
-          })
+        reportFiles.map(async (file) => {
+          const filePath = path.join(reportsDir, file);
+          const stats = await fs.stat(filePath);
+          const parsed = parseReportFilename(file);
+
+          let displayName = file;
+          let scanType = null;
+          let target = null;
+
+          if (parsed.scanId) {
+            // Look up the Scan document for rich metadata
+            try {
+              const scan = await Scan.findById(parsed.scanId).lean();
+              if (scan) {
+                target = scan.target;
+                scanType = scan.scanType;
+                displayName = `${scan.target}`;
+              }
+            } catch (lookupErr) {
+              // Scan not found — fall through to defaults
+            }
+          } else if (parsed.type === 'test') {
+            displayName = 'Test Report';
+            scanType = 'quick';
+          } else if (parsed.type === 'msf') {
+            displayName = 'Metasploit Report';
+            scanType = 'msf-vulnerability';
+          } else if (parsed.type === 'shell') {
+            displayName = 'Shell Scan Report';
+            scanType = 'quick';
+          }
+
+          return {
+            name: file,
+            displayName,
+            target,
+            scanType,
+            scanTypeLabel: scanType ? (SCAN_TYPE_LABELS[scanType] || scanType) : null,
+            path: `/reports/${file}`,
+            size: stats.size,
+            createdAt: stats.birthtime,
+          };
+        })
       );
 
       // Sort by creation time, newest first
