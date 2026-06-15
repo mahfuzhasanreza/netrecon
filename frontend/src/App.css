@@ -31,6 +31,7 @@
   font-size: 1.5em;
   margin: 0;
   color: #FF4D00;
+  cursor: pointer;
 }
 
 .toggle-btn {

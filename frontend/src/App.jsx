@@ -56,7 +56,9 @@ function App() {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
-          <h1>NetRecon</h1>
+          <h1 className='' onClick={() => setCurrentPage('dashboard')}>
+            NetRecon
+          </h1>
         </div>
 
         <nav className="sidebar-nav">

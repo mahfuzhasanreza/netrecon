@@ -336,7 +336,7 @@ function Scans() {
                 <p>{selectedScan.duration ? `${selectedScan.duration}s` : 'N/A'}</p>
               </div>
               
-              {selectedScan.reportPath && (
+              {/* {selectedScan.reportPath && (
                 <div className="detail-group">
                   <label>Generated Report:</label>
                   <button 
@@ -346,7 +346,7 @@ function Scans() {
                     Open Report
                   </button>
                 </div>
-              )}
+              )} */}
 
               <div className="detail-group">
                 <label>Open Ports:</label>
