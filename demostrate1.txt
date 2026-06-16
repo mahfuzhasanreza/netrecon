@@ -1,0 +1,27 @@
+Prity: Starting + (1-4)
+1. sudo nmap -sV -oX scan.xml localhost
+2. msfconsole
+3. msfdb init
+4. db_import scan.xml
+
+Sizan: (5-7)
+5. hosts
+6. services
+7. vulns
+
+Sayma: (8-9)
+8. show exploits
+9. search type:exploit name:postgres
+
+Mahfuz: (10-11) + Web + Ending
+10. search type:auxiliary postgres
+11. info auxiliary/scanner/postgres/postgres_login
+
+------------
+
+TryHackMe
+
+squawker-vpn
+set RHOSTS <>
+show options
+run
