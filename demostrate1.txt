@@ -1,5 +1,5 @@
 Prity: Starting + (1-4)
-1. sudo nmap -sV -oX scan.xml localhost
+1. sudo nmap -p- -sV -oX scan.xml localhost
 2. msfconsole
 3. msfdb init
 4. db_import scan.xml

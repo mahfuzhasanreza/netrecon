@@ -1,13 +1,13 @@
 # NetRecon - Reconnaissance Toolkit
 
-## 🎯 Overview
+## Overview
 
 NetRecon is a comprehensive network reconnaissance and vulnerability assessment platform combining:
 - **Enhanced Bash Script** with color output, animations, and HTML reports
 - **Node.js Backend** with MongoDB integration
 - **React Dashboard** for visualization and management
 
-## 📋 Project Structure
+## Project Structure
 
 ```
 NetRecon/
@@ -27,7 +27,7 @@ NetRecon/
 └── reports/               # Generated scan reports (HTML & TXT)
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Prerequisites
 - Node.js 14+ and npm
@@ -106,7 +106,7 @@ chmod +x netrecon.sh
 - **Dark Theme**: Professional dark UI
 - **Mobile Responsive**: Works on all devices
 
-## 🔑 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
@@ -132,7 +132,7 @@ chmod +x netrecon.sh
 - `GET /api/users/profile/:id` - Get user profile
 - `PUT /api/users/profile/:id` - Update profile
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend (.env)
 ```
@@ -150,7 +150,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 REACT_APP_SOCKET_URL=http://localhost:5000
 ```
 
-## 📝 Scan Types Explained
+## Scan Types Explained
 
 1. **Quick Scan**: Fast basic port scan using `-F` flag
 2. **Full Scan**: Comprehensive scan with all ports (`-p-`)
@@ -160,35 +160,6 @@ REACT_APP_SOCKET_URL=http://localhost:5000
 6. **Web Scan**: Targets common web service ports
 7. **LAN Discovery**: Network discovery via ping sweep (`-sn`)
 
-## MongoDB Collections
-
-### Users Collection
-```json
-{
-  "username": "string",
-  "email": "string",
-  "password": "string (hashed)",
-  "role": "user|admin",
-  "profile": {...},
-  "preferences": {...},
-  "createdAt": "date"
-}
-```
-
-### Scans Collection
-```json
-{
-  "userId": "ObjectId",
-  "target": "string",
-  "scanType": "string",
-  "status": "pending|running|completed|failed",
-  "results": {...},
-  "ports": {open, closed, filtered},
-  "threats": {critical, high, medium, low},
-  "createdAt": "date"
-}
-```
-
 ## 🛠️ Development
 
 ### Running in Development Mode
@@ -196,7 +167,7 @@ REACT_APP_SOCKET_URL=http://localhost:5000
 ```bash
 # Terminal 1 - Backend
 cd backend
-npm run dev
+npm start
 
 # Terminal 2 - Frontend
 cd frontend
@@ -206,62 +177,7 @@ npm start
 ./netrecon.sh
 ```
 
-### Building for Production
-
-```bash
-# Backend
-cd backend
-npm install
-npm run build
-
-# Frontend
-cd frontend
-npm install
-npm run build
-```
-
-## 📖 Documentation
-
-For detailed documentation, see:
-- Backend API: See `backend/README.md`
-- Frontend: See `frontend/README.md`
-- Scripts: See `netrecon.sh` comments
-
-## ⚖️ Legal & Ethical
-
-NetRecon is designed for authorized security testing only. Before using this tool:
-
-- **DO**: Get explicit written permission from network owners
-- **DO**: Use only on networks you own or have authorization for
-- **DO**: Report vulnerabilities responsibly
-- **DON'T**: Scan networks without permission
-- **DON'T**: Use for malicious purposes
-- **DON'T**: Violate local laws and regulations
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Commit changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📄 License
-
-MIT License - See LICENSE file for details
-
-## 🚨 Disclaimer
-
-This tool is provided as-is for educational and authorized security testing purposes only. Users are responsible for ensuring they have proper authorization before using this tool on any network. Unauthorized access to networks is illegal.
-
-## 📞 Support
-
-For issues and questions:
-- Open an issue on GitHub
-- Check existing documentation
-- Review code comments for implementation details
+## Author
+- **Mahfuz Hasan Reza** - [GitHub](https://github.com/mahfuzhasanreza) | [LinkedIn](https://www.linkedin.com/in/mahfuzhasanreza)
 
 ---
-
-**Happy Hacking! Stay Ethical! 🔒**
