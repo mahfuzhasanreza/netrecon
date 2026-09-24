@@ -1,0 +1,7 @@
+===== NetRecon Report =====
+Target: localhost
+Date: Wed 16 Sep 11:47:11 +06 2026
+
+[1] Stealth Port Scan
+You requested a scan type which requires root privileges.
+QUITTING!

@@ -1,0 +1,6 @@
+===== NetRecon Report =====
+Target: localhost
+Date: Wed 16 Sep 11:47:52 +06 2026
+
+[1] Stealth Port Scan
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-09-16 11:47 +06

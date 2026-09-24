@@ -1,0 +1,14 @@
+===== NetRecon Report =====
+Target: localhost
+Date: Wed 16 Sep 11:44:52 +06 2026
+
+[1] UDP Port Scan
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-09-16 11:44 +06
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0000020s latency).
+Not shown: 65533 closed udp ports (port-unreach)
+PORT      STATE         SERVICE
+5353/udp  open|filtered zeroconf
+44316/udp open|filtered unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 1.85 seconds
